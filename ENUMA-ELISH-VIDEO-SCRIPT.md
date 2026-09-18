@@ -11,8 +11,8 @@
 
 Reuse this **exact paragraph, word-for-word**, appended to every single image prompt below. This is what keeps 64 separate generations looking like one consistent film rather than 64 unrelated pictures — the technique real production pipelines use in place of seeds.
 
-> **Style formula (paste byte-identical into every prompt):**
-> "Painted in the manner of a grand ceiling fresco: monumental, muscular figures rendered with sculptural anatomical precision and dynamic twisting contrapposto poses; rich chiaroscuro modeling in warm ochre, burnt sienna, deep umber, and dusty azure tones; visible plaster-and-pigment surface texture with fine craquelure; dramatic raking light from a single divine source; compositions framed with painted stone architecture and soft cloud banks; restrained, noble expressions; a sense of immense scale and cosmic gravity throughout."
+> **Style formula (paste byte-identical into every prompt) — updated to a gritty ancient-epic concept-art look (300-style), with gods and goddesses rendered as colossal, otherworldly beings:**
+> "Rendered as dramatic cinematic concept art in the style of an epic ancient-world war film: gritty, hyper-stylized realism with deep shadow and searing golden-orange and steel-blue rim lighting; gods and goddesses depicted as colossal, otherworldly beings towering over mortal-scale surroundings, with hyper-detailed muscular anatomy, wind-torn drapery, and glowing or unnatural skin tones; swirling dust, smoke, and embers in the air; low-angle heroic camera compositions with dramatic silhouettes against blown-out skies; a desaturated, high-contrast color grade with selective bursts of fire-orange and cold blue."
 
 Also generate, once, a small set of **reusable reference sheets** before the 64 scene images, and pass each as a reference image whenever that figure/place appears again (this is how consistency is actually enforced, not just the text formula):
 - Marduk (full figure, radiant, four eyes/four ears, plain backdrop)
@@ -169,6 +169,22 @@ Each image prompt below should be generated as: **[scene description] + the Styl
 **Total runtime: 575 seconds (~9 min 35 sec).**
 
 ---
+
+## 3b. Generated Images (this session)
+
+Style: gritty ancient-epic concept art ("300"-style), gods/goddesses rendered as colossal, otherworldly beings — see updated Style Formula in §1.
+
+| Scene | Description | Image |
+|---|---|---|
+| 1 | Primordial waters, Apsu and Tiamat commingling | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181537_57983236-97ee-472d-9b5c-c44d516eb36d.png |
+| 2 | Lahmu and Lahamu, silt-born gods | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181537_b610902e-ef4a-4528-ad48-f17fb087f996.png |
+| 3 | Anshar and Kishar, horizon of sky and earth | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181537_ac87ff51-62c9-4cbe-bc71-10fdbecd3b96.png |
+| 4 | Anu and Ea enthroned | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181713_94ae2139-da05-4f53-b808-09f1fb693fa2.png |
+| 5 | The young gods' noisy celestial court | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181647_c7a4abdc-6718-438f-884b-3f8d09f10c40.png |
+| 6 | Apsu and Mummu plotting destruction | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181741_0098c901-d17e-43a6-bf53-823556e6be84.png |
+| 13 | Birth of Marduk | *submitted, stuck in the free-tier generation queue — check back or re-submit via `generate_image` with the scene-13 prompt in §3 + the Style Formula in §1* |
+
+**Status:** the Higgsfield free-tier `z_image` backend hit heavy rate-limiting (`429 rate_limit_reached`) partway through this run, and one job (scene 13) has been queued for an extended period without completing. 6 of the 64 storyboard scenes were generated this session (~1 credit spent of the account's 10-credit balance; ~6.4 credits remain). The full 64-image storyboard prompts are ready in §3 above — generate the rest at your own pace (1 image ≈ 0.15 credits on `z_image`), ideally submitting one at a time with a short pause between each to avoid the free-tier rate limit, or upgrade the plan for higher throughput.
 
 ## 4. Production Notes (for when generation is greenlit)
 
