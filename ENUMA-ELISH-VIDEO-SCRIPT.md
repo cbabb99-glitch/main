@@ -172,7 +172,7 @@ Each image prompt below should be generated as: **[scene description] + the Styl
 
 ## 3b. Generated Images (this session)
 
-Style: gritty ancient-epic concept art ("300"-style), gods/goddesses rendered as colossal, otherworldly beings — see updated Style Formula in §1.
+Style: gritty ancient-epic concept art ("300"-style), gods/goddesses rendered as colossal, otherworldly beings — see updated Style Formula in §1. Scenes 7-12 were originally generated in the earlier fresco style and still need to be redone in this style (not yet re-run).
 
 | Scene | Description | Image |
 |---|---|---|
@@ -182,9 +182,24 @@ Style: gritty ancient-epic concept art ("300"-style), gods/goddesses rendered as
 | 4 | Anu and Ea enthroned | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181713_94ae2139-da05-4f53-b808-09f1fb693fa2.png |
 | 5 | The young gods' noisy celestial court | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181647_c7a4abdc-6718-438f-884b-3f8d09f10c40.png |
 | 6 | Apsu and Mummu plotting destruction | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260918_181741_0098c901-d17e-43a6-bf53-823556e6be84.png |
-| 13 | Birth of Marduk | *submitted, stuck in the free-tier generation queue — check back or re-submit via `generate_image` with the scene-13 prompt in §3 + the Style Formula in §1* |
+| 7-12 | *(pending redo in new style — see §3 for prompts)* | — |
+| 13 | Birth of Marduk (radiant warrior-god emerging in glory) | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215430_218ec114-167b-4a6d-9bcc-806a97645a53.png |
+| 14 | Young Marduk atop a mountain, mastering the four winds | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215508_15bf2371-fca7-4bb2-bb1f-057bdb50786d.png |
+| 15 | Elder gods demanding vengeance before Tiamat | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215532_41b260b7-b644-43a5-8de1-95fc28350c6d.png |
+| 16 | Tiamat rearing up in fury | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215603_0801be68-8743-4f26-88bc-5067c7c2be6a.png |
+| 17 | Tiamat's monster army emerging from the water | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215649_b7888373-c902-4e52-8ff7-f1a48b7e739d.png |
+| 18 | Kingu crowned supreme commander of the monsters | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215720_3ff9d067-b2b3-473a-81f4-7090fef94d9a.png |
+| 19 | Kingu holding the Tablet of Destinies | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215749_2750ef64-d4d5-4d8b-9628-bbae378cd930.png |
+| 20 | The young gods' terror at word of the monster army | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215819_9e01d5d7-68d7-440c-8427-da348e2a6e32.png |
+| 21 | Anu retreating in fear from Tiamat's army | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215848_fa202516-aaf8-4c0f-b2ec-0209ee98a378.png |
+| 22 | Ea turning back in despair from the churning sea | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215912_d2345783-4679-4bb7-ad7c-6003568f5417.png |
+| 23 | Anshar asking Marduk to face Tiamat | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215933_f28151bc-f191-4168-9589-fdb53bd6778e.png |
+| 24 | Marduk demanding kingship as his price | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_215951_311eb171-b574-4928-a24d-1da9288de9cb.png |
+| 25 | The gods' council feast, granting Marduk authority | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_220010_fc0663ef-fe73-4361-b229-87128bdaaa90.png |
+| 26 | The garment test — Marduk destroys it with a word | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_220028_c26002a1-8114-4b09-bbc2-a1c6ad1cb08b.png |
+| 27 | The garment restored — the gods hail Marduk king | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_220050_3c7bde3d-7624-4a0b-9bec-c54507fd61b7.png |
 
-**Status:** the Higgsfield free-tier `z_image` backend hit heavy rate-limiting (`429 rate_limit_reached`) partway through this run, and one job (scene 13) has been queued for an extended period without completing. 6 of the 64 storyboard scenes were generated this session (~1 credit spent of the account's 10-credit balance; ~6.4 credits remain). The full 64-image storyboard prompts are ready in §3 above — generate the rest at your own pace (1 image ≈ 0.15 credits on `z_image`), ideally submitting one at a time with a short pause between each to avoid the free-tier rate limit, or upgrade the plan for higher throughput.
+**Status (in progress):** the Higgsfield free-tier `z_image` backend has intermittent congestion (`429 rate_limit_reached` and occasional stuck-queue jobs that eventually fail), but one-at-a-time submission with a wait between each is getting through steadily. Generation is continuing scene-by-scene; this table will keep growing. Also note: the original scene-13 prompt ("four eyes and four ears... fire upon his lips") appears to have triggered a content-moderation stall/failure twice — it succeeded once reworded to drop the unusual anatomy description. Avoid unusual body-part-count phrasing in future prompts on this model.
 
 ## 4. Production Notes (for when generation is greenlit)
 
