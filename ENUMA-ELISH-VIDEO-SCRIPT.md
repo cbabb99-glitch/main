@@ -201,6 +201,33 @@ Style: gritty ancient-epic concept art ("300"-style), gods/goddesses rendered as
 
 **Status (in progress):** the Higgsfield free-tier `z_image` backend has intermittent congestion (`429 rate_limit_reached` and occasional stuck-queue jobs that eventually fail), but one-at-a-time submission with a wait between each is getting through steadily. Generation is continuing scene-by-scene; this table will keep growing. Also note: the original scene-13 prompt ("four eyes and four ears... fire upon his lips") appears to have triggered a content-moderation stall/failure twice — it succeeded once reworded to drop the unusual anatomy description. Avoid unusual body-part-count phrasing in future prompts on this model.
 
+## 3c. Key-Scenes Plan (for a shorter, user-narrated, animated cut)
+
+Per later direction: instead of the full 64-scene video, animate only ~16 pivotal story beats into short video clips (image-to-video), with the user recording their own narration rather than AI-generated voice.
+
+| # | Story beat | Scene # | Status |
+|---|---|---|---|
+| 1 | Primordial waters — Apsu & Tiamat commingle | 1 | ✅ have still |
+| 2 | Apsu plots with Mummu | 6 | ✅ have still |
+| 3 | Birth of Marduk | 13 | ✅ have still |
+| 4 | Tiamat rises in fury | 16 | ✅ have still |
+| 5 | Kingu and the Tablet of Destinies | 19 | ✅ have still |
+| 6 | Marduk demands kingship as his price | 24 | ✅ have still |
+| 7 | The gods crown Marduk king | 27 | ✅ have still |
+| 8 | Marduk mounts the storm chariot | 29 | ✅ have still |
+| 9 | Tiamat rises to meet him in battle | 31 | ✅ have still |
+| 10 | The decisive net/battle blow | 34 | ✅ have still |
+| 11 | Marduk stands between heaven and earth (sky/earth division) | 38 | ⚠️ stuck in generation queue repeatedly — not yet completed |
+| 12 | Marduk orders the cosmos (constellations) | 44 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_225905_ad139ce7-18ed-49c4-acfb-4791cf819b6a.png |
+| 13 | Creation of mankind from clay | 52 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_225925_cf0fd23a-7593-4b2a-bee6-b7aa3dabc21f.png |
+| 14 | Founding of Babylon / Esagila | 55 | ⚠️ stuck in generation queue repeatedly — not yet completed |
+| 15 | Marduk enthroned, fifty names proclaimed | 57 | ⬜ not yet attempted |
+| 16 | Closing shot — dawn over the ordered world | 63 | ⬜ not yet attempted |
+
+**Note:** the Higgsfield free-tier `z_image` backend has had significant, unpredictable congestion tonight — individual jobs sometimes sit "queued" for 2+ minutes before resolving (occasionally succeeding, occasionally failing and needing a retry). This is a platform load issue, not a problem with the prompts. Scenes 38 and 55 each failed twice despite reworded, non-violent prompt text, then scene 55 got stuck again on a third attempt — worth simply retrying later when the backend is calmer.
+
+**Cost so far / remaining:** ~2.8 credits left of the account's original 10. Two more stills (scenes 57, 63) plus retrying 38 and 55 will use well under 1 more credit. The animation step (turning ~16 stills into short video clips) requires a paid plan — see the cost breakdown given directly to the user in chat (Plus tier, 1,000 credits/mo, comfortably covers ~16 clips at roughly 220-450 credits depending on retries).
+
 ## 4. Production Notes (for when generation is greenlit)
 
 1. **Reference sheets first** (§1) — generate once, reuse as `image_references` on every later scene that features that figure/place. This is the actual consistency mechanism; the text formula alone is not enough.
