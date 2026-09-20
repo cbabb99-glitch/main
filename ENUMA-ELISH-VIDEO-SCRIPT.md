@@ -217,16 +217,16 @@ Per later direction: instead of the full 64-scene video, animate only ~16 pivota
 | 8 | Marduk mounts the storm chariot | 29 | ✅ have still |
 | 9 | Tiamat rises to meet him in battle | 31 | ✅ have still |
 | 10 | The decisive net/battle blow | 34 | ✅ have still |
-| 11 | Marduk stands between heaven and earth (sky/earth division) | 38 | ⚠️ stuck in generation queue repeatedly — not yet completed |
+| 11 | Marduk gazes at the newly divided sky and earth | 38 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260920_193424_843e7399-2890-49f2-b09a-a5a61778562d.png |
 | 12 | Marduk orders the cosmos (constellations) | 44 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_225905_ad139ce7-18ed-49c4-acfb-4791cf819b6a.png |
 | 13 | Creation of mankind from clay | 52 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260919_225925_cf0fd23a-7593-4b2a-bee6-b7aa3dabc21f.png |
-| 14 | Founding of Babylon / Esagila | 55 | ⚠️ stuck in generation queue repeatedly — not yet completed |
-| 15 | Marduk enthroned, fifty names proclaimed | 57 | ⬜ not yet attempted |
-| 16 | Closing shot — dawn over the ordered world | 63 | ⬜ not yet attempted |
+| 14 | Founding of Babylon / Esagila | 55 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260920_193918_6b47f315-6ec0-4599-ae65-913ef498e51b.png |
+| 15 | Marduk enthroned, fifty names proclaimed | 57 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260920_193938_7dacd36b-1d89-4d19-9a2b-0c1ed941ff88.png |
+| 16 | Closing shot — dawn over the ordered world | 63 | ✅ have still — https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260920_194428_fe45eb64-f24d-43a0-b22b-fb5ca40a730e.png |
 
-**Note:** the Higgsfield free-tier `z_image` backend has had significant, unpredictable congestion tonight — individual jobs sometimes sit "queued" for 2+ minutes before resolving (occasionally succeeding, occasionally failing and needing a retry). This is a platform load issue, not a problem with the prompts. Scenes 38 and 55 each failed twice despite reworded, non-violent prompt text, then scene 55 got stuck again on a third attempt — worth simply retrying later when the backend is calmer.
+**All 16 key-scene stills are now complete.** The `z_image` backend had recurring congestion across both sessions — several scenes (13, 34, 38, 55, 63) needed 2-3 reworded retries before succeeding, generally because simpler, more neutral phrasing (avoiding words like "slain," "cleave," or unusual anatomy counts) got through faster than the original dramatic wording. This looks like general backend load rather than a hard content block, since identical concepts succeeded on retry.
 
-**Cost so far / remaining:** ~2.8 credits left of the account's original 10. Two more stills (scenes 57, 63) plus retrying 38 and 55 will use well under 1 more credit. The animation step (turning ~16 stills into short video clips) requires a paid plan — see the cost breakdown given directly to the user in chat (Plus tier, 1,000 credits/mo, comfortably covers ~16 clips at roughly 220-450 credits depending on retries).
+**Next step — animation:** turning these 16 stills into short video clips (image-to-video) requires a paid Higgsfield plan; the free tier (now ~2.35 credits left) doesn't support video generation. Recommended: **Plus (1,000 credits/mo, $39/mo annual or $49/mo monthly)** — comfortably covers ~16 clips at an estimated 220-450 credits including retries. Narration will be the user's own recorded voice, added afterward in editing rather than through Higgsfield.
 
 ## 4. Production Notes (for when generation is greenlit)
 
