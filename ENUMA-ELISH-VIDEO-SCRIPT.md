@@ -228,6 +228,39 @@ Per later direction: instead of the full 64-scene video, animate only ~16 pivota
 
 **Next step — animation:** turning these 16 stills into short video clips (image-to-video) requires a paid Higgsfield plan; the free tier (now ~2.35 credits left) doesn't support video generation. Recommended: **Plus (1,000 credits/mo, $39/mo annual or $49/mo monthly)** — comfortably covers ~16 clips at an estimated 220-450 credits including retries. Narration will be the user's own recorded voice, added afterward in editing rather than through Higgsfield.
 
+## 3d. Final Animated Clips (16/16 complete)
+
+All 16 key-scene stills have been animated into short video clips (image-to-video, `kling3_0`, sound off — no AI voice, since you're recording your own narration). Total runtime if played back-to-back: ~2 min 22 sec of raw clips; add pauses between them to match your narration pace for the full ~8-10 minute video.
+
+| # | Duration | Video clip | Narration line to read over it |
+|---|---|---|---|
+| 1 | 10s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005527_e426a0f0-b26c-400f-bd8a-eacecc84243c.mp4 | "Before earth or sky had names, before any god had risen, two waters existed: Apsu, the sweet water, and Tiamat, the restless salt sea, mingling their currents into one." |
+| 6 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005304_b6f4af76-fab6-416e-8573-55cb4ecac8ad.mp4 | "Apsu, sleepless and wrathful, called his vizier Mummu to his side and vowed to destroy the children who troubled his ancient peace." |
+| 13 | 10s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005245_15d635c6-9049-44b6-95f9-3080789fce7a.mp4 | "This child was Marduk, most glorious of gods... He grew mighty beyond measure." |
+| 16 | 8s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005407_cbb32e48-47c6-42e2-b00a-a281a2849820.mp4 | "Tiamat's grief turned to fury, and she resolved to make war upon her own children, the gods of the younger heavens." |
+| 19 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005358_9d53a8e8-766b-4aae-825f-89379c411205.mp4 | "Into Kingu's hands Tiamat placed the Tablet of Destinies, granting him command over the fate of all the gods." |
+| 24 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005412_1b226f5c-c9d1-49a7-9507-67ae687ddc0c.mp4 | "Marduk agreed, but demanded a price: that if he triumphed, he alone should be crowned king above all the gods." |
+| 27 | 7s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005416_5329fca7-44ca-403b-a663-e179109aa26d.mp4 | "He spoke, and the garment vanished; he spoke again, and it was whole — the gods rejoiced, and hailed him king." |
+| 29 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005418_49158cc4-51ae-4951-98ec-dc8b38d34f3b.mp4 | "The four winds became his chariot steeds, and he mounted a storm-chariot to ride against the mother of monsters." |
+| 31 | 10s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005431_1db5c1b2-8881-4004-8b2e-6fac6dab2a8b.mp4 | "Tiamat rose to meet him, vast and terrible, her army of monsters roaring in her wake, sky and sea trembling." |
+| 34 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005434_1a62a218-644d-4613-8e4e-382afc21726f.mp4 | "Swiftly he cast his net, binding her within it, and loosed a single arrow straight into her heart. The arrow struck true..." |
+| 38 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005437_a67f2ad3-8da1-4017-8ef4-b0a50632fa9f.mp4 | "Marduk returned to Tiamat's still body... and split her in two like a great shell. Half of her he lifted high to become the vault of the sky... the other half became the earth." |
+| 44 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005441_b5211243-b2c5-49f8-940f-4bb8eacf2b71.mp4 | "He set the great gods each within their stations, fixing the stars into constellations across the night." |
+| 52 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005449_d7b1f55c-01cd-40fd-b710-d55cd16c0ebd.mp4 | "From his blood, mixed with clay of the earth, Ea shaped the first of mankind, to labor in the gods' place." |
+| 55 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005507_e1f57e87-65e7-4e3b-8763-b77c07696ee9.mp4 | "With their own hands the gods raised Babylon, city of gods, and at its heart built Esagila, Marduk's shining temple." |
+| 57 | 8s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005455_d0ee3eae-152b-49f3-8fb4-3fc974aba04c.mp4 | "The gods proclaimed his fifty names, each one a testament to his boundless and manifold power." |
+| 63 | 8s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_005459_31d8e14c-2566-4d7b-8a18-dc7b635746be.mp4 | "This was the Enuma Elish — when on high the heavens had not yet been named, and the earth below had no name at all." |
+
+**Credits used for animation:** ~213 credits (1002.35 → 789.35). Well within the Plus plan's 1,000/month.
+
+### How to assemble the final video
+1. Download all 16 clips above (right-click save, or `curl` each URL).
+2. Import them in order into any video editor (CapCut, DaVinci Resolve, Premiere, iMovie, etc.), in the sequence given by the table.
+3. Record your own narration reading the **full script** in `ENUMA-ELISH-NARRATION.txt` (or the excerpted lines above per clip).
+4. Stretch each clip's on-screen duration (via a freeze-frame hold at the end, a slow-motion retime, or simply letting the clip loop/hold on its last frame) to match how long your narration takes for that section — this is how you hit the full 8-10 minute runtime from ~2.5 minutes of raw clips.
+5. Add a title card at the start and credits/closing card at the end if desired.
+6. Export at 1080p or higher (the clips are 1280x720 natively — an editor can upscale, or use Higgsfield's `upscale_video` tool for a cleaner 1080p/4K pass before exporting).
+
 ## 4. Production Notes (for when generation is greenlit)
 
 1. **Reference sheets first** (§1) — generate once, reuse as `image_references` on every later scene that features that figure/place. This is the actual consistency mechanism; the text formula alone is not enough.
