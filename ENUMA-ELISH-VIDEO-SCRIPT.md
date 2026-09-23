@@ -228,16 +228,20 @@ Per later direction: instead of the full 64-scene video, animate only ~16 pivota
 
 **Next step — animation:** turning these 16 stills into short video clips (image-to-video) requires a paid Higgsfield plan; the free tier (now ~2.35 credits left) doesn't support video generation. Recommended: **Plus (1,000 credits/mo, $39/mo annual or $49/mo monthly)** — comfortably covers ~16 clips at an estimated 220-450 credits including retries. Narration will be the user's own recorded voice, added afterward in editing rather than through Higgsfield.
 
-## 3d. Final Animated Clips (16/16 complete, upscaled to 4K)
+## 3d. Final Animated Clips (18/18 complete, upscaled to 4K)
 
-All 16 key-scene stills have been animated into short video clips (image-to-video, `kling3_0`, sound off — no AI voice, since you're recording your own narration), then upscaled to **4K (2160p)** via Topaz. The storm-chariot clip (scene 29) was also regenerated to fix a stray extra horse — it now shows a clean row of four.
+All key-scene stills have been animated into short video clips (image-to-video, `kling3_0`, sound off — no AI voice, since you're recording your own narration), then upscaled to **4K (2160p)** via Topaz. The storm-chariot clip (scene 29) was also regenerated to fix a stray extra horse — it now shows a clean row of four.
 
-**→ See `ENUMA-ELISH-NARRATION-BLUEPRINT.md` for the full shot-by-shot narration guide** (which paragraph to read over each clip, cut cues, and cumulative timing — totals ~8:40).
+**Two scenes were added later** to fill a gap in the story (Tiamat pleading with Apsu, and Ea's spell/crown/the building of the Apsu abode) — these use a different visual style (painterly cinematic fantasy digital art: statuesque bronze-skinned deities, gold-vs-teal color grading, radiant backlighting) per later direction, rather than the gritty "300" concept-art look used everywhere else. They're marked *(new style)* below.
+
+**→ See `ENUMA-ELISH-NARRATION-BLUEPRINT.md` for the full shot-by-shot narration guide** (which paragraph to read over each clip, cut cues, and cumulative timing — totals ~9:21).
 
 | # | Duration | 4K video clip |
 |---|---|---|
 | 1 | 10s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010657_7a13c876-efed-4012-837a-f962d39f61af.mp4 |
 | 6 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010701_b317e2cd-022f-4475-98ae-572f19b3ba28.mp4 |
+| 6b (new) | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260923_212913_72e40bce-2f60-46c2-8ed8-1e834c57cca4.mp4 *(new style — Tiamat pleads with Apsu)* |
+| 6c (new) | 10s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260923_212919_1fb7aa8e-8329-4cf8-81ef-fb2453006e3c.mp4 *(new style — Ea's spell, the crown, the Apsu abode)* |
 | 13 | 10s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010704_7fac53dd-2ca0-4f36-9877-0b7afac512cf.mp4 |
 | 16 | 8s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010707_c66622da-cfc9-4baa-9bcc-28e3ae710d3a.mp4 |
 | 19 | 9s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010710_0998806f-6fdd-4f08-8fbc-7d96aed0b05d.mp4 |
@@ -253,10 +257,10 @@ All 16 key-scene stills have been animated into short video clips (image-to-vide
 | 57 | 8s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010747_e8686036-cc65-40b8-912d-5e3a8bb5c7cc.mp4 |
 | 63 | 8s | https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010753_2e430140-45c6-4a07-9a56-c94edded4a34.mp4 |
 
-**Credits used:** ~213 for initial animation + ~200 for the chariot fix and 4K upscale pass = ~413 total (1002.35 → 588.85). Still well within the Plus plan's 1,000/month.
+**Credits used:** ~213 for initial animation + ~200 for the chariot fix and 4K upscale pass + ~small additional amount for the 2 added scenes and their 4K upscales. Still well within the Plus plan's 1,000/month.
 
 ### How to assemble the final video
-1. Download all 16 clips above (right-click save, or `curl` each URL).
+1. Download all 18 clips above (right-click save, or `curl` each URL).
 2. Import them in order into any video editor (CapCut, DaVinci Resolve, Premiere, iMovie, etc.).
 3. Record your narration following `ENUMA-ELISH-NARRATION-BLUEPRINT.md` — it tells you exactly what to read over each clip and when to cut.
 4. Stretch each clip's on-screen duration (freeze-frame hold, slow-motion retime, or loop) to match your narration pace for that section.
