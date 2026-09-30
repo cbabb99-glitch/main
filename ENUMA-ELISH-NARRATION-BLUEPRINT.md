@@ -1,10 +1,10 @@
 # Enuma Elish — Final Narration & Cut Blueprint
 
-All 18 video clips are in **4K (2160p)**, and all 18 narration segments now have a **realistic AI voiceover** (Higgsfield `text2speech_v2`/ElevenLabs, voice "Cillian" — deep, authoritative male voice fitting the epic tone). Each clip below has its matching audio file — just drop both onto your timeline in sync and you're done; no need to record narration yourself.
+All 19 video clips are in **4K (2160p)**, and all 19 narration segments have a **realistic AI voiceover** (Higgsfield `text2speech_v2`/ElevenLabs, voice "Cillian" — deep, authoritative male voice fitting the epic tone). Each clip below has its matching audio file — just drop both onto your timeline in sync and you're done; no need to record narration yourself.
 
 **How to use this:** in your editor, place each video clip on the timeline in order, and place its matching audio clip on the audio track directly below it, starting at the same point. Trim/extend each video clip (freeze-frame hold, slow-motion retime, or simple extend/trim) to match its audio's actual length — the "Est. length" below is a guide only; use the real duration of the downloaded MP3. Add your background music bed underneath at the levels discussed earlier (18-24 dB below the voice, ducked further under speech).
 
-**Note:** clips 3-4 (Tiamat's plea, Ea's spell) use a different visual style (painterly cinematic fantasy digital art) than the rest of the video (gritty "300"-style concept art), per earlier direction — the voiceover style is consistent throughout regardless.
+**Note on styles:** clips 3-4 (Tiamat's plea, Ea's spell) use a painterly cinematic fantasy digital art style; clip 15 (Kingu's judgment) uses the original gritty "300"-style concept art matching the main sequence, with Kingu designed as a mortal-scale bearded warrior holding the Tablet of Destinies. Everything else uses the gritty "300"-style. Voiceover is consistent throughout regardless of visual style.
 
 ---
 
@@ -41,6 +41,8 @@ All 18 video clips are in **4K (2160p)**, and all 18 narration segments now have
 **Est. length:** ~30s
 
 > "Ea, wisest of the gods, wove a spell of surpassing power, casting Apsu into an unbreakable sleep before he could strike. He seized the crown from Apsu's brow, and drew the waters of the deep as his own eternal dwelling. Upon the stilled body of Apsu, Ea built his shining house, and named it the Apsu, abode of wisdom beneath the world."
+
+*(A companion still exists showing Apsu's body merged into the columns of this house: https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_202652_d6d2a0ff-e80e-4992-9ee2-bca4beb40f03.png — not yet animated; ask if you want it turned into a clip and added here.)*
 
 ---
 
@@ -134,16 +136,25 @@ All 18 video clips are in **4K (2160p)**, and all 18 narration segments now have
 
 ---
 
-### Clip 15 — Creation of Mankind (~6:48)
-**Video:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010737_3106f1cd-7138-4622-9f8d-8cacea1fc4a4.mp4
-**Voiceover:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_022726_a58f5646-22cb-4459-befa-5e62012c1adf.mp3
-**Est. length:** ~45s
+### Clip 15 — The Judgment and Bleeding of Kingu (~6:48, new addition)
+**Video:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_212308_2b86d6d9-c909-44bd-896a-3f2682562f14.mp4
+**Voiceover:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_212432_8d847f2f-8f4a-4895-a481-9cae251130fb.mp3
+**Est. length:** ~20s
 
-> "The gods gathered once more, and Marduk asked which among the rebels had first incited the war. All pointed to Kingu, who had held the stolen Tablet and led Tiamat's monstrous host to war. Kingu was condemned, and the gods opened his veins, letting his blood fall dark upon the ground. From his blood, mixed with clay of the earth, Ea shaped the first of mankind, to labor in the gods' place. Mankind rose from the dust, freeing the gods forever from toil, tilling the earth and building temples. The gods rejoiced at their freedom, and turned their labor instead to building a home for their king."
+> "The gods gathered once more, and Marduk asked which among the rebels had first incited the war. All pointed to Kingu, who had held the stolen Tablet and led Tiamat's monstrous host to war. Kingu was condemned, and the gods opened his veins, letting his blood fall dark upon the ground."
 
 ---
 
-### Clip 16 — The Founding of Babylon (~7:33)
+### Clip 16 — Creation of Mankind (~7:08)
+**Video:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010737_3106f1cd-7138-4622-9f8d-8cacea1fc4a4.mp4
+**Voiceover:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_212433_af28abb6-764c-43cd-862a-008ca60451e3.mp3
+**Est. length:** ~24s
+
+> "From his blood, mixed with clay of the earth, Ea shaped the first of mankind, to labor in the gods' place. Mankind rose from the dust, freeing the gods forever from toil, tilling the earth and building temples. The gods rejoiced at their freedom, and turned their labor instead to building a home for their king."
+
+---
+
+### Clip 17 — The Founding of Babylon (~7:32)
 **Video:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010744_a1370fde-44aa-4c6a-a64b-14e48b50c79d.mp4
 **Voiceover:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_022726_692d493e-a174-44bf-b711-65b1b0827259.mp3
 **Est. length:** ~17s
@@ -152,7 +163,7 @@ All 18 video clips are in **4K (2160p)**, and all 18 narration segments now have
 
 ---
 
-### Clip 17 — The Fifty Names (~7:50)
+### Clip 18 — The Fifty Names (~7:49)
 **Video:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010747_e8686036-cc65-40b8-912d-5e3a8bb5c7cc.mp4
 **Voiceover:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_022727_d479a112-30f2-4eb6-89a2-14c32969546c.mp3
 **Est. length:** ~33s
@@ -161,24 +172,24 @@ All 18 video clips are in **4K (2160p)**, and all 18 narration segments now have
 
 ---
 
-### Clip 18 — Closing: Dawn Over the Ordered World (~8:23)
+### Clip 19 — Closing: Dawn Over the Ordered World (~8:22)
 **Video:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260921_010753_2e430140-45c6-4a07-9a56-c94edded4a34.mp4
 **Voiceover:** https://d8j0ntlcm91z4.cloudfront.net/user_3JNrpKYbOG6O62xKfJal44J1zLS/hf_20260930_022726_a249a240-80fe-449f-bfa5-87100ae74af3.mp3
 **Est. length:** ~34s — let this one breathe
 
 > "So the Babylonians told of their world's beginning — not from nothing, but from struggle, sacrifice, and the ordering of chaos. Chaos was given form, the restless waters were tamed, and from conflict came the first fragile order of the world. This was the Enuma Elish — when on high the heavens had not yet been named, and the earth below had no name at all. A tale carved in clay, sung by an ancient people, of gods, monsters, and the birth of the ordered heavens."
 
-**End.** Total: ~8:57 at this pace. Hold on the last frame for 2-3 seconds after the final word before cutting to black or a credits card.
+**End.** Total: ~8:56 at this pace. Hold on the last frame for 2-3 seconds after the final word before cutting to black or a credits card.
 
 ---
 
 ## Assembly steps (CapCut or any editor)
-1. Download all 18 video clips and all 18 audio files from the links above.
+1. Download all 19 video clips and all 19 audio files from the links above.
 2. Import both sets into your editor.
-3. Place video clips on the main timeline in order (1 through 18).
+3. Place video clips on the main timeline in order (1 through 19).
 4. Place each audio file on an audio track, aligned to start at the same point as its matching video clip.
 5. Check each audio file's actual duration and trim/extend its video clip to match (freeze-frame hold or slow-motion retime works well) — the video should never end before its narration finishes.
 6. Add your background music bed on a separate track underneath, following the mixing guidance from earlier (18-24 dB below the voice, ducked further during speech, allowed to swell in the gaps).
 7. Export at 4K.
 
-All clips: 4K (2160p), 16:9. Clips 3-4 use the newer painterly style; everything else uses the gritty "300"-style concept art. Voiceover: consistent "Cillian" preset voice across all 18 segments.
+All clips: 4K (2160p), 16:9. Clips 3-4 use the painterly style; clip 15 and everything else uses the gritty "300"-style concept art. Voiceover: consistent "Cillian" preset voice across all 19 segments.
