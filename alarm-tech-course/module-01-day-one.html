@@ -1,0 +1,663 @@
+<title>Alarm Tech Day One</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a single training "binder" column; the simulator breaks wider like a pulled-out panel drawing. */
+:root{
+  --bg:#eceff2; --surface:#ffffff; --surface-2:#f5f7f9; --ink:#16202a; --muted:#566271; --line:#cdd5dd;
+  --alarm:#c8102e; --sup:#c97a00; --trouble:#b89300; --ok:#1d8048; --wire:#8995a3;
+  --enclosure:#b3141f; --lcd-bg:#16261b; --lcd-ink:#a8f0b4; --lcd-dim:#4f7a58;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f151b; --surface:#17202a; --surface-2:#1d2833; --ink:#e4e9ee; --muted:#9aa6b3; --line:#2b3744;
+  --alarm:#ff4d5e; --sup:#f0a020; --trouble:#e2c23a; --ok:#3fbf73; --wire:#5f6c7a;
+  --enclosure:#a3121c; --lcd-bg:#0d1a11; --lcd-ink:#a8f0b4; --lcd-dim:#3e6347; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0f151b; --surface:#17202a; --surface-2:#1d2833; --ink:#e4e9ee; --muted:#9aa6b3; --line:#2b3744;
+  --alarm:#ff4d5e; --sup:#f0a020; --trouble:#e2c23a; --ok:#3fbf73; --wire:#5f6c7a;
+  --enclosure:#a3121c; --lcd-bg:#0d1a11; --lcd-ink:#a8f0b4; --lcd-dim:#3e6347; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;padding:0 16px}
+.wrap{max-width:1000px;margin:0 auto;padding-block:32px 80px}
+.prose{max-width:68ch}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.05;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2.4rem,6vw,4rem);text-transform:uppercase}
+h2{font-size:clamp(1.8rem,4vw,2.4rem);text-transform:uppercase}
+h3{font-size:1.35rem;text-transform:uppercase;letter-spacing:.03em}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.muted{color:var(--muted)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--sup);outline-offset:2px}
+
+/* header */
+header.hero{display:grid;gap:18px;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+.hero .tag{display:inline-flex;align-items:center;gap:10px}
+.hero .tag b{background:var(--enclosure);color:#fff;font-family:var(--f-mono);font-size:.75rem;padding:3px 8px;letter-spacing:.1em}
+.meta{display:flex;flex-wrap:wrap;gap:8px 28px;font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+.meta span strong{color:var(--ink);font-weight:600}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin:0 -16px;padding:10px 16px;overflow-x:auto}
+nav.toc ol{list-style:none;display:flex;gap:6px;margin:0 auto;padding:0;max-width:1000px;white-space:nowrap}
+nav.toc a{display:block;color:var(--muted);text-decoration:none;font-family:var(--f-mono);font-size:.78rem;padding:6px 10px;border:1px solid transparent}
+nav.toc a:hover{color:var(--ink);border-color:var(--line)}
+
+section.lesson{padding-top:56px;display:flex;flex-direction:column;gap:20px;scroll-margin-top:60px}
+.lesson-head{display:flex;flex-direction:column;gap:8px}
+
+/* diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);overflow-x:auto}
+.diagram svg{display:block;width:100%;min-width:640px;height:auto}
+svg text{font-family:var(--f-mono);fill:var(--ink)}
+.dev{cursor:pointer}
+.dev .ring{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.dev:hover .ring,.dev:focus .ring{stroke:var(--sup);stroke-width:3}
+.dev.active .ring{fill:var(--alarm);stroke:var(--alarm)}
+.dev.active.t-sup .ring{fill:var(--sup);stroke:var(--sup)}
+.dev.active.t-trouble .ring{fill:var(--trouble);stroke:var(--trouble)}
+.dev.active .glyph{fill:#fff}
+.dev:focus{outline:none}
+.wire{fill:none;stroke:var(--wire);stroke-width:2}
+.wire.dash{stroke-dasharray:6 6}
+.dev-label{font-size:12px;fill:var(--muted)}
+.strobe{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.strobe-lens{fill:var(--line)}
+.flashing .strobe-lens{animation:strobe 1s steps(1) infinite}
+@keyframes strobe{0%{fill:#fff;filter:drop-shadow(0 0 10px #fff)}15%{fill:var(--line);filter:none}}
+.cs-box{fill:var(--surface-2);stroke:var(--ink);stroke-width:2}
+.dispatch .cs-box{stroke:var(--alarm);stroke-width:3}
+
+/* sim console */
+.console{display:grid;align-items:start;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px}
+@media (max-width:780px){.console{grid-template-columns:1fr}}
+.facp{background:var(--enclosure);color:#fff;padding:16px;border-radius:4px;display:flex;flex-direction:column;gap:12px}
+.facp-top{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-display);font-size:1.1rem;letter-spacing:.08em;text-transform:uppercase}
+.facp-top small{font-family:var(--f-mono);font-size:.7rem;opacity:.8}
+.lcd{background:var(--lcd-bg);color:var(--lcd-ink);font-family:var(--f-mono);font-size:.86rem;line-height:1.45;padding:12px 14px;min-height:6.4em;border:3px solid #1a1a1a;border-radius:3px;white-space:pre-wrap;word-break:break-word;text-shadow:0 0 6px rgba(168,240,180,.35)}
+.lcd .dim{color:var(--lcd-dim)}
+.leds{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.led{display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;text-align:center}
+.led i{width:14px;height:14px;border-radius:50%;background:#4a0d12;border:2px solid #2a0508}
+.led.on.green i{background:#4cff8a;box-shadow:0 0 8px #4cff8a}
+.led.on.red i{background:#ff3344;box-shadow:0 0 10px #ff3344}
+.led.on.amber i{background:#ffb020;box-shadow:0 0 8px #ffb020}
+.led.on.blink i{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:.25}}
+.keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.keys button{background:#f2f2f2;color:#1a1a1a;border:0;border-bottom:3px solid #8c8c8c;padding:10px 4px;font-family:var(--f-mono);font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;border-radius:3px}
+.keys button:active{transform:translateY(2px);border-bottom-width:1px}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px}
+.cs-msg{font-family:var(--f-mono);font-size:.82rem;padding:10px;background:var(--surface-2);border-left:4px solid var(--line);min-height:3.2em}
+.cs-msg.bad{border-left-color:var(--alarm);color:var(--alarm);font-weight:600}
+.cs-msg.good{border-left-color:var(--ok)}
+.cs-msg.warn{border-left-color:var(--sup)}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:.92rem}
+.switch button{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);padding:6px 12px;font-family:var(--f-mono);font-size:.78rem}
+.switch button.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.log{font-family:var(--f-mono);font-size:.75rem;max-height:190px;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.log div{display:flex;gap:8px}
+.log time{color:var(--muted);flex:none}
+.trouble-btns{display:flex;flex-wrap:wrap;gap:8px}
+.chip-btn{border:1px dashed var(--trouble);background:transparent;color:var(--ink);padding:6px 10px;font-size:.82rem}
+.chip-btn.active{background:var(--trouble);color:#1a1a1a;border-style:solid}
+.tryit{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;font-size:.92rem}
+.tryit div{padding:10px 12px;border:1px solid var(--line);background:var(--surface)}
+.tryit b{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);display:block;letter-spacing:.06em}
+
+/* signals */
+.signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:780px){.signals{grid-template-columns:1fr}}
+.sig{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--c);padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sig h3{color:var(--c)}
+.sig dl{margin:0;display:grid;gap:8px;font-size:.93rem}
+.sig dt{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sig dd{margin:0}
+
+/* procedure */
+.phases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:780px){.phases{grid-template-columns:1fr}}
+.phase{background:var(--surface);border:1px solid var(--line);padding:18px;min-width:0}
+.phase ol{margin:10px 0 0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px;font-size:.93rem}
+.callout{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--alarm);padding:16px 18px;font-size:.95rem}
+.script{font-family:var(--f-mono);font-size:.86rem;background:var(--surface-2);padding:14px 16px;border:1px solid var(--line);white-space:pre-wrap}
+
+/* scenario */
+.scenario{background:var(--surface);border:1px solid var(--line)}
+.scn-bar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:12px 18px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.scn-progress{height:4px;background:var(--line)}
+.scn-progress i{display:block;height:100%;background:var(--sup);transition:width .4s}
+.scn-body{padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+.stamp{font-family:var(--f-mono);font-size:.8rem;color:var(--sup);letter-spacing:.06em;text-transform:uppercase}
+.scn-text{font-size:1.02rem;max-width:68ch}
+.scn-text .say{display:block;margin-top:10px;padding-left:12px;border-left:3px solid var(--line);color:var(--muted);font-style:italic}
+.choices{display:flex;flex-direction:column;gap:10px}
+.choice{text-align:left;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);padding:12px 14px;font-size:.95rem;display:flex;gap:12px}
+.choice:hover:not(:disabled){border-color:var(--ink)}
+.choice .k{font-family:var(--f-mono);font-weight:600;color:var(--muted);flex:none}
+.choice.best{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--surface))}
+.choice.picked.poor{border-color:var(--alarm);background:color-mix(in srgb,var(--alarm) 10%,var(--surface))}
+.choice.picked.fair{border-color:var(--sup);background:color-mix(in srgb,var(--sup) 10%,var(--surface))}
+.choice:disabled{cursor:default}
+.feedback{border-left:5px solid var(--c);padding:12px 16px;background:var(--surface-2);display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.feedback b{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.primary{align-self:flex-start;background:var(--ink);color:var(--bg);border:0;padding:10px 18px;font-family:var(--f-mono);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+.fade-in{animation:fade .35s ease-out}
+@keyframes fade{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* quiz */
+.quiz{display:flex;flex-direction:column;gap:16px}
+.q{background:var(--surface);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:10px}
+.q .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.q .opts button{text-align:left;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);padding:10px 12px;font-size:.92rem}
+.q .opts button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.q .opts button.wrong{border-color:var(--alarm);background:color-mix(in srgb,var(--alarm) 12%,var(--surface))}
+.q .why{font-size:.92rem;color:var(--muted)}
+.scoreline{font-family:var(--f-mono);font-size:.9rem;padding:12px 16px;background:var(--surface);border:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;bottom:0}
+
+/* field card */
+.fieldcard{background:var(--surface);border:2px solid var(--ink);padding:20px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:700px){.fieldcard{grid-template-columns:1fr}}
+.fieldcard ul{margin:8px 0 0;padding-left:1.2em;font-size:.93rem;display:flex;flex-direction:column;gap:4px}
+.fine{font-size:.82rem;color:var(--muted);max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="tag"><b>MODULE 01</b><span class="eyebrow">Alarm Tech Foundations</span></div>
+    <h1>Day One: Signals, Panels &amp; Putting a System on Test</h1>
+    <p class="prose" style="font-size:1.12rem">Most of your first months will be spent helping a senior tech inspect and test fire alarm systems. This module covers what you need before you touch anything: how the system talks, what the panel is telling you, and how to test a building without sending the fire department to it.</p>
+    <div class="meta">
+      <span>Time <strong>≈ 35 min</strong></span>
+      <span>Level <strong>New hire / apprentice</strong></span>
+      <span>Reference <strong>NFPA 72, Ch. 10, 14 &amp; 23 (edition adopted locally)</strong></span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Module sections">
+    <ol>
+      <li><a href="#system">1 · The system</a></li>
+      <li><a href="#signals">2 · Three signals</a></li>
+      <li><a href="#ontest">3 · On test</a></li>
+      <li><a href="#scenario">4 · Field scenario</a></li>
+      <li><a href="#check">5 · Knowledge check</a></li>
+      <li><a href="#card">6 · Field card</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 SYSTEM -->
+  <section class="lesson" id="system">
+    <div class="lesson-head">
+      <span class="eyebrow">Lesson 1</span>
+      <h2>How a fire alarm system talks</h2>
+    </div>
+    <div class="prose stack">
+      <p>Every system has three parts. <strong>Initiating devices</strong> sense a problem (smoke detectors, heat detectors, pull stations, sprinkler waterflow and valve switches). They report to the <strong>fire alarm control panel</strong> (FACP; NFPA 72 calls it the control unit). The panel decides what the signal means and runs the <strong>outputs</strong>: horns and strobes, elevator recall, door holders, fan shutdown, and the <strong>communicator</strong> that sends the signal to a central monitoring station.</p>
+      <p>Addressable devices sit on a <strong>signaling line circuit (SLC)</strong> and each one reports its own address, like <span style="font-family:var(--f-mono)">L1D014</span>. Older conventional systems group devices on an <strong>initiating device circuit (IDC)</strong> with an end-of-line resistor so the panel can tell if a wire is cut. Horns and strobes run on <strong>notification appliance circuits (NACs)</strong>.</p>
+    </div>
+
+    <div class="tryit">
+      <div><b>TRY 1</b>Click the pull station. Watch the signal travel. Then try <em>Silence</em>, then <em>Reset</em>. Why won't it reset?</div>
+      <div><b>TRY 2</b>Click the tamper switch. It's a different color and a different signal. Why?</div>
+      <div><b>TRY 3</b>Turn <em>On test</em> off and set off a smoke detector. Look at the central station.</div>
+    </div>
+
+    <div class="diagram">
+      <svg id="sys" viewBox="0 0 900 470" role="img" aria-label="Fire alarm system diagram: initiating devices on the left wired to the control panel, notification appliances and the central station on the right">
+        <text x="20" y="20" class="dev-label" style="letter-spacing:.12em">INITIATING DEVICES (CLICK)</text>
+        <text x="370" y="104" class="dev-label" style="letter-spacing:.12em">CONTROL PANEL</text>
+        <text x="650" y="20" class="dev-label" style="letter-spacing:.12em">NOTIFICATION / MONITORING</text>
+        <g id="wires"></g>
+        <g id="devices"></g>
+        <!-- panel -->
+        <g id="panelBox">
+          <rect x="370" y="115" width="170" height="230" rx="4" fill="var(--enclosure)"/>
+          <rect x="386" y="132" width="138" height="54" rx="2" fill="var(--lcd-bg)"/>
+          <text id="svgLcd" x="394" y="164" style="fill:var(--lcd-ink);font-size:12px">SYSTEM NORMAL</text>
+          <text x="455" y="215" text-anchor="middle" style="fill:#fff;font-family:var(--f-display);font-size:24px;letter-spacing:.1em">FACP</text>
+          <circle id="sLedA" cx="400" cy="250" r="7" fill="#4a0d12"/><text x="414" y="254" style="fill:#fff;font-size:10px">ALARM</text>
+          <circle id="sLedS" cx="400" cy="275" r="7" fill="#4a0d12"/><text x="414" y="279" style="fill:#fff;font-size:10px">SUPERVISORY</text>
+          <circle id="sLedT" cx="400" cy="300" r="7" fill="#4a0d12"/><text x="414" y="304" style="fill:#fff;font-size:10px">TROUBLE</text>
+        </g>
+        <!-- strobes -->
+        <g id="nac1g" transform="translate(750 70)">
+          <rect class="strobe" x="-28" y="-26" width="56" height="64" rx="4"/>
+          <rect class="strobe-lens" x="-18" y="-18" width="36" height="20" rx="3"/>
+          <text x="0" y="28" text-anchor="middle" style="font-size:11px;font-weight:600">FIRE</text>
+        </g>
+        <text x="750" y="128" text-anchor="middle" class="dev-label">Horn/strobe · NAC 1</text>
+        <g id="nac2g" transform="translate(750 185)">
+          <rect class="strobe" x="-28" y="-26" width="56" height="64" rx="4"/>
+          <rect class="strobe-lens" x="-18" y="-18" width="36" height="20" rx="3"/>
+          <text x="0" y="28" text-anchor="middle" style="font-size:11px;font-weight:600">FIRE</text>
+        </g>
+        <text x="750" y="243" text-anchor="middle" class="dev-label">Horn/strobe · NAC 2</text>
+        <!-- communicator -->
+        <rect x="590" y="352" width="110" height="46" rx="3" class="cs-box"/>
+        <text x="645" y="372" text-anchor="middle" style="font-size:11px;font-weight:600">COMMUNICATOR</text>
+        <text x="645" y="388" text-anchor="middle" class="dev-label" style="font-size:10px">cell / phone line</text>
+        <g id="csG">
+          <rect x="745" y="330" width="140" height="90" rx="3" class="cs-box"/>
+          <text x="815" y="352" text-anchor="middle" style="font-size:11px;font-weight:600">CENTRAL STATION</text>
+          <text id="csL1" x="815" y="378" text-anchor="middle" style="font-size:11px">Monitoring</text>
+          <text id="csL2" x="815" y="396" text-anchor="middle" class="dev-label" style="font-size:10px">account on test</text>
+        </g>
+        <g id="pulses"></g>
+      </svg>
+    </div>
+
+    <div class="console">
+      <div class="facp" aria-label="Fire alarm control panel simulator">
+        <div class="facp-top"><span>Fire Alarm Control Panel</span><small>HARBOR POINT MOB</small></div>
+        <div class="lcd" id="lcd" aria-live="polite"></div>
+        <div class="leds">
+          <div class="led green on" id="ledAC"><i></i>AC power</div>
+          <div class="led red" id="ledA"><i></i>Alarm</div>
+          <div class="led amber" id="ledS"><i></i>Superv.</div>
+          <div class="led amber" id="ledT"><i></i>Trouble</div>
+          <div class="led amber" id="ledSil"><i></i>Silenced</div>
+        </div>
+        <div class="keys">
+          <button id="kAck" type="button">Acknowledge</button>
+          <button id="kSil" type="button">Silence</button>
+          <button id="kReset" type="button">Reset</button>
+          <button id="kNext" type="button">Next event</button>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card stack" style="gap:10px">
+          <div class="switch"><span><strong>Central station account</strong><br><span class="muted" style="font-size:.85rem">Did you call before testing?</span></span><button id="testBtn" type="button" class="on" aria-pressed="true">ON TEST</button></div>
+          <div class="cs-msg good" id="csMsg">Account on test. Signals will be logged, no dispatch.</div>
+        </div>
+        <div class="card stack" style="gap:10px">
+          <strong>Create a trouble condition</strong>
+          <div class="trouble-btns">
+            <button type="button" class="chip-btn" data-trouble="open">Cut NAC 2 wire</button>
+            <button type="button" class="chip-btn" data-trouble="ac">Kill AC power</button>
+            <button type="button" class="chip-btn" data-trouble="ground">Ground fault</button>
+          </div>
+        </div>
+        <div class="card stack" style="gap:8px">
+          <strong>Panel history</strong>
+          <div class="log" id="log" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 SIGNALS -->
+  <section class="lesson" id="signals">
+    <div class="lesson-head">
+      <span class="eyebrow">Lesson 2</span>
+      <h2>Three signals, three different jobs</h2>
+    </div>
+    <p class="prose">The panel sorts everything into three types. Learn these cold. They decide how urgent the call is and who gets dispatched.</p>
+    <div class="signals">
+      <article class="sig" style="--c:var(--alarm)">
+        <h3>Alarm</h3>
+        <p>There may be a fire. Life safety first.</p>
+        <dl>
+          <div><dt>Comes from</dt><dd>Smoke and heat detectors, pull stations, sprinkler waterflow switches</dd></div>
+          <div><dt>System does</dt><dd>Sounds horns, flashes strobes, recalls elevators, releases door holders, shuts down fans, and sends the signal for fire department dispatch</dd></div>
+          <div><dt>You do</dt><dd>Treat every alarm you didn't cause as real. Find the device on the display before you touch a key.</dd></div>
+        </dl>
+      </article>
+      <article class="sig" style="--c:var(--sup)">
+        <h3>Supervisory</h3>
+        <p>Something that protects the building is off-normal.</p>
+        <dl>
+          <div><dt>Comes from</dt><dd>Sprinkler valve tamper switches, low air on a dry-pipe system, fire pump running, and most duct smoke detectors</dd></div>
+          <div><dt>System does</dt><dd>Lights the supervisory LED, sounds the panel buzzer, and sends to central, which usually calls the building contact rather than the fire department</dd></div>
+          <div><dt>You do</dt><dd>Find out why. A closed sprinkler valve means the building may have no sprinkler protection.</dd></div>
+        </dl>
+      </article>
+      <article class="sig" style="--c:var(--trouble)">
+        <h3>Trouble</h3>
+        <p>The system itself has a fault and might not work.</p>
+        <dl>
+          <div><dt>Comes from</dt><dd>Open or cut wires, ground faults, AC power loss, low or missing batteries, a failed communicator, a device missing from its base</dd></div>
+          <div><dt>System does</dt><dd>Lights the trouble LED, sounds the buzzer, and reports trouble to central</dd></div>
+          <div><dt>You do</dt><dd>Document it, then troubleshoot it. Trouble usually clears itself once the fault is repaired.</dd></div>
+        </dl>
+      </article>
+    </div>
+    <div class="callout prose"><strong>Acknowledge, Silence and Reset do different things.</strong> <em>Acknowledge</em> tells the panel a person has seen the event and quiets the panel's own buzzer. <em>Silence</em> turns off the building's horns, but the panel is still in alarm. <em>Reset</em> clears latched alarms, and it only works once the device has been restored: the smoke has cleared, or the pull station has been reset with its key. If a new alarm comes in after you silence, the horns sound again.</div>
+  </section>
+
+  <!-- 3 ON TEST -->
+  <section class="lesson" id="ontest">
+    <div class="lesson-head">
+      <span class="eyebrow">Lesson 3</span>
+      <h2>Putting a system on test</h2>
+    </div>
+    <p class="prose">The most common rookie mistake in this trade costs nothing to avoid: testing a monitored system without calling it in. The central station sees a real alarm, dispatches the fire department, and the building may get billed for a false alarm. Follow the same order every time.</p>
+    <div class="phases">
+      <div class="phase"><h3>Before</h3><ol>
+        <li>Check in with the building contact. Ask who is in the building and about any known problems.</li>
+        <li>Look at the panel <em>before</em> touching it. Photograph and write down any existing alarm, supervisory or trouble conditions.</li>
+        <li>Find out what the system controls: elevator recall, door holders, fans and dampers, access control, suppression releasing. Coordinate or bypass these per company procedure and with the owner's OK.</li>
+        <li>Call central station and place the account on test. Notify occupants, and the fire department if your area requires it.</li>
+      </ol></div>
+      <div class="phase"><h3>During</h3><ol>
+        <li>Test each device and confirm the panel shows the right signal type and location text.</li>
+        <li>Confirm central station received each signal type. If they didn't, the building isn't really monitored.</li>
+        <li>Write down every deficiency as you find it.</li>
+        <li>An alarm you didn't cause is a real alarm until proven otherwise.</li>
+      </ol></div>
+      <div class="phase"><h3>After</h3><ol>
+        <li>Restore every device: reset pull stations, clear detectors, open valves back up.</li>
+        <li>Un-bypass every output you disabled.</li>
+        <li>Reset the panel and confirm it is normal, apart from conditions you already documented.</li>
+        <li>Call central: compare the signals they logged with what you tested, then take the account off test.</li>
+        <li>Review the results with the building contact and leave the report.</li>
+      </ol></div>
+    </div>
+    <div class="stack" style="gap:8px">
+      <span class="eyebrow">What the call sounds like</span>
+      <div class="script">"Hi, this is Jordan with [Company], tech ID 4471. I'm at Harbor Point Medical Offices, account 20-11873, passcode is [passcode]. I need the whole account on test for three hours for an annual inspection. We'll be sending alarm, supervisory and trouble signals. Can I get your operator number?"
+— Operator: "You're on test until 11:15. Operator 62."</div>
+    </div>
+  </section>
+
+  <!-- 4 SCENARIO -->
+  <section class="lesson" id="scenario">
+    <div class="lesson-head">
+      <span class="eyebrow">Lesson 4 · Field scenario</span>
+      <h2>Annual inspection: Harbor Point Medical Offices</h2>
+    </div>
+    <p class="prose">Three-story medical office building, addressable system, monitored by a central station. You're riding with Marcus, a NICET Level III tech. Seven decisions. Choose what you would actually do.</p>
+    <div class="scenario" id="scn"></div>
+  </section>
+
+  <!-- 5 QUIZ -->
+  <section class="lesson" id="check">
+    <div class="lesson-head">
+      <span class="eyebrow">Lesson 5</span>
+      <h2>Knowledge check</h2>
+    </div>
+    <div class="quiz" id="quiz"></div>
+    <div class="scoreline"><span id="qScore">0 of 9 answered</span><span id="qPct" class="muted">Pass mark: 8 of 9</span></div>
+  </section>
+
+  <!-- 6 FIELD CARD -->
+  <section class="lesson" id="card">
+    <div class="lesson-head">
+      <span class="eyebrow">Lesson 6</span>
+      <h2>Field card</h2>
+    </div>
+    <div class="fieldcard">
+      <div><h3>Signal types</h3><ul>
+        <li><strong>Alarm:</strong> smoke, heat, pull station, waterflow</li>
+        <li><strong>Supervisory:</strong> valve tamper, low air, fire pump running, most duct detectors</li>
+        <li><strong>Trouble:</strong> open circuit, ground fault, AC loss, low battery, communicator failure</li>
+      </ul></div>
+      <div><h3>Panel keys</h3><ul>
+        <li><strong>Acknowledge:</strong> "I've seen it." Quiets the panel buzzer.</li>
+        <li><strong>Silence:</strong> stops the horns, but the panel stays in alarm</li>
+        <li><strong>Reset:</strong> clears latched events. Restore the device first.</li>
+      </ul></div>
+      <div><h3>Before you test</h3><ul>
+        <li>Check in with the building contact</li>
+        <li>Document existing conditions on the panel</li>
+        <li>Know what the outputs control</li>
+        <li>Account on test, with the operator's number</li>
+        <li>Occupants notified</li>
+      </ul></div>
+      <div><h3>Before you leave</h3><ul>
+        <li>Every device restored and every bypass removed</li>
+        <li>Panel reset and normal</li>
+        <li>Signals confirmed with central, account off test</li>
+        <li>Deficiencies reviewed with the building contact</li>
+      </ul></div>
+    </div>
+    <p class="fine">This module is for training only. Requirements depend on the NFPA 72 edition and local amendments adopted where you work, the authority having jurisdiction (AHJ), the panel manufacturer's manuals, and your company's written procedures. When they differ from this module, follow them. Building, account and people names are fictional.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+
+/* ---------- devices ---------- */
+const DEVICES=[
+  {key:'smoke',glyph:'S',label:'Smoke detector',type:'alarm',text:'SMOKE DET 2ND FL ELEV LOBBY',addr:'L1D014'},
+  {key:'heat',glyph:'H',label:'Heat detector',type:'alarm',text:'HEAT DET MECH ROOM 104',addr:'L1D022'},
+  {key:'pull',glyph:'P',label:'Pull station',type:'alarm',text:'PULL STA 1ST FL LOBBY',addr:'L1M003'},
+  {key:'flow',glyph:'WF',label:'Waterflow switch',type:'alarm',text:'WATERFLOW RISER 1',addr:'L1M010'},
+  {key:'tamper',glyph:'TS',label:'Valve tamper switch',type:'sup',text:'VALVE TAMPER RISER 1',addr:'L1M011'},
+  {key:'duct',glyph:'D',label:'Duct smoke detector',type:'sup',text:'DUCT DET AHU-2 RETURN',addr:'L1D030'}
+];
+const TROUBLES={
+  open:{text:'OPEN CIRCUIT NAC 2',addr:'P1.NAC2'},
+  ac:{text:'AC POWER LOSS',addr:'PANEL'},
+  ground:{text:'GROUND FAULT',addr:'PANEL'}
+};
+const TYPE_NAME={alarm:'ALARM',sup:'SUPERVISORY',trouble:'TROUBLE'};
+const PRI={alarm:0,sup:1,trouble:2};
+
+const devG=$('devices'), wireG=$('wires');
+DEVICES.forEach((d,i)=>{
+  const y=72+i*67, py=150+i*36;
+  const w=document.createElementNS(NS,'path');
+  w.setAttribute('d',`M96 ${y} C240 ${y} 230 ${py} 370 ${py}`);
+  w.setAttribute('class','wire'); w.id='w-'+d.key; wireG.appendChild(w);
+  const g=document.createElementNS(NS,'g');
+  g.setAttribute('class','dev t-'+d.type); g.setAttribute('tabindex','0'); g.setAttribute('role','button');
+  g.setAttribute('aria-label',d.label+' — activate or restore'); g.dataset.key=d.key;
+  const isPull=d.key==='pull';
+  g.innerHTML=(isPull?`<rect class="ring" x="44" y="${y-22}" width="44" height="44" rx="4"/>`:`<circle class="ring" cx="66" cy="${y}" r="24"/>`)+
+    `<text class="glyph" x="66" y="${y+5}" text-anchor="middle" style="font-size:14px;font-weight:600">${d.glyph}</text>`+
+    `<text class="dev-label" x="100" y="${y-28}" >${d.label}</text>`;
+  devG.appendChild(g);
+  g.addEventListener('click',()=>toggleDevice(d));
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleDevice(d);}});
+});
+[['nac1','M540 170 C640 170 640 70 722 70'],['nac2','M540 200 C640 200 640 185 722 185'],
+ ['comm','M540 310 C575 310 560 375 590 375'],['phone','M700 375 L745 375']].forEach(([id,d])=>{
+  const p=document.createElementNS(NS,'path'); p.setAttribute('d',d); p.id='w-'+id;
+  p.setAttribute('class','wire'+(id==='phone'?' dash':'')); wireG.appendChild(p);
+});
+
+/* ---------- state ---------- */
+const S={active:{},troubles:{},events:[],silenced:false,onTest:true,view:0,clock:9*60+12,seq:0};
+function now(){const m=S.clock++;const h=Math.floor(m/60)%24,mm=m%60;return String(h).padStart(2,'0')+':'+String(mm).padStart(2,'0');}
+function log(msg){const el=document.createElement('div');el.innerHTML=`<time>${now()}</time><span>${msg}</span>`;$('log').prepend(el);}
+
+function pulse(id,color,dur){
+  return new Promise(res=>{
+    const p=$('w-'+id); if(reduce||!p){res();return;}
+    const len=p.getTotalLength(); const c=document.createElementNS(NS,'circle');
+    c.setAttribute('r','6'); c.setAttribute('fill',color); $('pulses').appendChild(c);
+    const t0=performance.now(); dur=dur||650;
+    (function step(t){const k=Math.min(1,(t-t0)/dur);const pt=p.getPointAtLength(len*k);
+      c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y);
+      if(k<1)requestAnimationFrame(step);else{c.remove();res();}})(t0);
+  });
+}
+const colorOf=t=>getComputedStyle(document.documentElement).getPropertyValue(t==='alarm'?'--alarm':t==='sup'?'--sup':'--trouble').trim();
+
+async function addEvent(type,key,text,addr,viaWire){
+  if(S.events.some(e=>e.key===key))return;
+  if(viaWire) await pulse(viaWire,colorOf(type));
+  const ev={type,key,text,addr,acked:false,time:now(),n:++S.seq};
+  S.events.push(ev);
+  log(`<strong style="color:${colorOf(type)}">${TYPE_NAME[type]}</strong> ${text} ${addr}`);
+  if(type==='alarm'&&S.silenced){S.silenced=false;log('New alarm — notification appliances resound');}
+  S.view=0; render(); transmit(ev);
+}
+async function transmit(ev){
+  if(ev.type==='alarm'&&!S.silenced) Promise.all([pulse('nac1','#fff',500),pulse('nac2','#fff',500)]);
+  if(S.troubles.ac && ev.key!=='ac'){} // panel on battery: still transmits
+  await pulse('comm',colorOf(ev.type)); await pulse('phone',colorOf(ev.type),400);
+  const m=$('csMsg'),g=$('csG');
+  let cls='good',msg,l1,l2;
+  if(S.onTest){msg=`Received ${TYPE_NAME[ev.type]}: ${ev.text}. Account on test, logged only.`;l1='Signal logged';l2='on test, no action';}
+  else if(ev.type==='alarm'){cls='bad';msg=`FIRE ALARM: ${ev.text}. Fire department DISPATCHED. The account was not on test.`;l1='FIRE DEPT';l2='DISPATCHED';}
+  else if(ev.type==='sup'){cls='warn';msg=`Supervisory: ${ev.text}. Operator calling building contact.`;l1='Supervisory';l2='calling contact';}
+  else {cls='warn';msg=`Trouble: ${ev.text}. Logged; service company notified.`;l1='Trouble';l2='notifying service co.';}
+  m.className='cs-msg '+cls; m.textContent=msg; $('csL1').textContent=l1; $('csL2').textContent=l2;
+  g.classList.toggle('dispatch',cls==='bad');
+}
+
+function toggleDevice(d){
+  const el=devG.querySelector(`[data-key="${d.key}"]`);
+  if(!S.active[d.key]){S.active[d.key]=true;el.classList.add('active');addEvent(d.type,d.key,d.text,d.addr,d.key);}
+  else{S.active[d.key]=false;el.classList.remove('active');
+    log(`${d.label} restored${d.key==='pull'?' (reset with key)':''} — press Reset to clear`);render();}
+}
+document.querySelectorAll('[data-trouble]').forEach(b=>b.addEventListener('click',()=>{
+  const k=b.dataset.trouble,t=TROUBLES[k];
+  if(!S.troubles[k]){S.troubles[k]=true;b.classList.add('active');addEvent('trouble',k,t.text,t.addr,null);}
+  else{S.troubles[k]=false;b.classList.remove('active');S.events=S.events.filter(e=>e.key!==k);
+    log(`TROUBLE RESTORED ${t.text}`);S.view=0;render();}
+}));
+
+$('kAck').onclick=()=>{const n=S.events.filter(e=>!e.acked).length;S.events.forEach(e=>e.acked=true);log(n?`Acknowledged ${n} event(s) — panel buzzer quiet`:'Acknowledge: nothing new');render();};
+$('kSil').onclick=()=>{if(!S.events.some(e=>e.type==='alarm')){log('Silence: no alarm active');return;}
+  S.silenced=true;log('Notification appliances SILENCED — panel still in alarm');render();};
+$('kReset').onclick=()=>{
+  if(!S.events.some(e=>e.type!=='trouble')){log('Reset: nothing latched to clear');render();return;}
+  const stuck=S.events.filter(e=>e.type!=='trouble'&&S.active[e.key]);
+  S.events=S.events.filter(e=>e.type==='trouble'||S.active[e.key]);
+  S.silenced=false;
+  log('SYSTEM RESET');
+  stuck.forEach(e=>{e.acked=false;log(`<strong style="color:${colorOf(e.type)}">${TYPE_NAME[e.type]}</strong> returns: ${e.text} — device not restored`);});
+  if(!S.events.length){$('csMsg').className='cs-msg good';$('csMsg').textContent=S.onTest?'Account on test. Restoral received.':'Restoral received. Monitoring.';$('csL1').textContent='Monitoring';$('csL2').textContent=S.onTest?'account on test':'in service';$('csG').classList.remove('dispatch');}
+  S.view=0;render();};
+$('kNext').onclick=()=>{if(S.events.length){S.view=(S.view+1)%S.events.length;render();}};
+$('testBtn').onclick=()=>{S.onTest=!S.onTest;const b=$('testBtn');b.classList.toggle('on',S.onTest);b.textContent=S.onTest?'ON TEST':'IN SERVICE';b.setAttribute('aria-pressed',S.onTest);
+  $('csMsg').className='cs-msg '+(S.onTest?'good':'warn');$('csMsg').textContent=S.onTest?'Account on test. Signals will be logged, no dispatch.':'Account in service. Alarms will be dispatched to the fire department.';
+  $('csL1').textContent='Monitoring';$('csL2').textContent=S.onTest?'account on test':'in service';$('csG').classList.remove('dispatch');
+  log(S.onTest?'Central station: account placed ON TEST':'Central station: account IN SERVICE');};
+
+function sorted(){return S.events.slice().sort((a,b)=>PRI[a.type]-PRI[b.type]||b.n-a.n);}
+function render(){
+  const ev=sorted(); const has=t=>ev.some(e=>e.type===t); const un=ev.some(e=>!e.acked);
+  const cnt=`<span class="dim">ALM ${ev.filter(e=>e.type==='alarm').length}  SUP ${ev.filter(e=>e.type==='sup').length}  TBL ${ev.filter(e=>e.type==='trouble').length}</span>`;
+  if(!ev.length){$('lcd').innerHTML=`SYSTEM NORMAL\nHARBOR POINT MOB\n<span class="dim">${now().replace(/./g,c=>c)} ${S.troubles.ac?'':'AC OK'}  BATT OK</span>`;S.clock--;}
+  else{const e=ev[S.view%ev.length];
+    $('lcd').innerHTML=`${TYPE_NAME[e.type]}${e.acked?'':' *'}  ${e.time}\n${e.text}\n${e.addr}   ${(S.view%ev.length)+1} OF ${ev.length}\n${cnt}`;}
+  const set=(id,on,blink)=>{$(id).classList.toggle('on',on);$(id).classList.toggle('blink',!!blink);};
+  set('ledAC',!S.troubles.ac);
+  set('ledA',has('alarm'),has('alarm')&&ev.some(e=>e.type==='alarm'&&!e.acked));
+  set('ledS',has('sup'),ev.some(e=>e.type==='sup'&&!e.acked));
+  set('ledT',has('trouble'),ev.some(e=>e.type==='trouble'&&!e.acked));
+  set('ledSil',S.silenced);
+  $('sLedA').setAttribute('fill',has('alarm')?'#ff3344':'#4a0d12');
+  $('sLedS').setAttribute('fill',has('sup')?'#ffb020':'#4a0d12');
+  $('sLedT').setAttribute('fill',has('trouble')?'#ffb020':'#4a0d12');
+  $('svgLcd').textContent=!ev.length?'SYSTEM NORMAL':TYPE_NAME[ev[0].type]+(un?' *':'');
+  const sounding=has('alarm')&&!S.silenced;
+  $('nac1g').classList.toggle('flashing',sounding);
+  $('nac2g').classList.toggle('flashing',sounding&&!S.troubles.open);
+}
+log('Panel powered up — system normal');
+render();
+
+/* ---------- scenario ---------- */
+const SCN=[
+ {stamp:'07:32 · Front entrance',text:'You and Marcus pull up for the annual inspection. Patients start arriving at 8:00. Marcus heads to the van for the ladder and the smoke test aerosol.',say:'"Go ahead and get us started. I’ll be right in."',
+  choices:[
+   {t:'Go straight to the electrical room and open the panel so you’re ready when Marcus gets there.',r:'fair',f:'You found the panel, but nobody in the building knows you’re here. The facility manager hears from a nurse that "some guy is in the electrical room." Starting at the panel isn’t wrong. Starting without checking in is.'},
+   {t:'Find the facility manager. Introduce yourselves, ask who’s in the building today, any known problems, and what the alarm system is tied into.',r:'best',f:'Right. Denise, the facility manager, tells you there’s a dialysis suite on 2 and that the elevators recall on alarm. You also learn the panel "has been beeping for a week." Two minutes at the front desk just changed your whole plan.'},
+   {t:'Start testing the lobby pull stations to save time. The panel can wait.',r:'poor',f:'You just put a monitored building into alarm with nobody notified. The lobby fills with noise, patients head for the doors, and central station dispatches the fire department. This is how new techs end up on the news and off the crew.'}]},
+ {stamp:'07:41 · Electrical room',text:'You open the panel door. The display reads TROUBLE · GROUND FAULT and the trouble LED is lit. It was already like this when you arrived.',say:'',
+  choices:[
+   {t:'Press Reset to clear it so you start with a clean panel.',r:'poor',f:'A ground fault is a wiring fault, so Reset won’t clear it. It comes right back. Worse, you just put your hands on an existing problem without writing it down. If anything goes wrong later, it looks like you caused it.'},
+   {t:'Photograph the display, write the condition on the report as found on arrival, and tell Marcus and Denise.',r:'best',f:'Right. Pre-existing conditions get documented before you touch anything. That protects you and the company, and the ground fault becomes a deficiency the customer can approve repairing. That’s billable work and a safer building.'},
+   {t:'Ignore it. Denise said it’s been beeping for a week, so it’s probably nothing.',r:'poor',f:'A ground fault can stop devices on that circuit from reporting. "It’s been like that a while" is exactly what you hear before a system fails during a real fire. Document every trouble condition.'}]},
+ {stamp:'07:48 · Electrical room',text:'Time to call the central station before any testing starts.',say:'',
+  choices:[
+   {t:'"Hey, this is Jordan, can you put Harbor Point on test?"',r:'fair',f:'Close, but the operator needs the account number and passcode to verify you are allowed to do this. Without them you either get refused or put the wrong account on test. You also didn’t ask how long, or get an operator number.'},
+   {t:'Give your name, company and tech ID, the account number and passcode, put the whole account on test for three hours, say which signal types you’ll send, and write down the operator number.',r:'best',f:'Textbook. The operator number and the test window go on your report. If something gets dispatched later, you have proof the account was properly placed on test.'},
+   {t:'Skip it. Denise said she’d call the monitoring company.',r:'poor',f:'Denise means well, but she doesn’t have your passcode and she’s not the one testing. Whoever sends the signals makes the call, and confirms it. No call means no test.'}]},
+ {stamp:'07:55 · Electrical room',text:'Marcus pulls up the panel’s sequence of operations. An alarm will recall both elevators, release the magnetic door holders on every floor, and shut down AHU-2.',say:'"So what do we do about the outputs?"',
+  choices:[
+   {t:'Bypass the whole panel so nothing activates while we test.',r:'poor',f:'If you disable the whole system, a real fire during your inspection goes unreported. You also can’t prove the outputs work, which is part of the test. Bypass only what you have to, with the owner’s agreement, and keep track of it.'},
+   {t:'Plan it with Denise: decide which outputs to bypass and which to test live, coordinate the elevator recall test, and write down every bypass so it gets restored.',r:'best',f:'Right. Elevator recall with patients in wheelchairs on 2 needs planning, not surprises. Writing down each bypass is what makes sure the building is fully restored when you leave.'},
+   {t:'Leave everything live. Outputs are supposed to work.',r:'fair',f:'They should work, and testing them matters. But an unannounced elevator recall with a dialysis patient waiting, or fans shutting down mid-procedure, is a planning failure. Test outputs on purpose, with the people affected in the loop.'}]},
+ {stamp:'09:20 · 1st floor lobby',text:'Occupants have been notified. You activate the lobby pull station. Horns and strobes work and the panel shows ALARM · PULL STA 1ST FL LOBBY. You call central to confirm.',say:'Operator: "I don’t show anything from that account in the last 20 minutes."',
+  choices:[
+   {t:'It’s probably delayed. Keep testing and check again at the end.',r:'poor',f:'If central didn’t get it, this building isn’t monitored, and has maybe not been for a while. Keep going and you’ll test 80 more devices without knowing whether any signal leaves the building.'},
+   {t:'Stop testing. Check the communicator status on the panel, test again, and if it still fails, tell Marcus and Denise, log it as a deficiency, and follow company procedure for an unmonitored building.',r:'best',f:'Right. A communicator that doesn’t transmit is one of the most serious things you can find. Marcus finds the cellular communicator showing no signal since a carrier upgrade. The owner gets notified the same day, and the AHJ may need to be told and a fire watch considered while it’s down.'},
+   {t:'Ask the operator to just mark the signal as received so the report is clean.',r:'poor',f:'Never. That falsifies a life safety record. Inspection reports are legal documents, and the next fire won’t care what the paperwork says.'}]},
+ {stamp:'11:30 · Electrical room',text:'Communicator fixed and retested. All devices tested. Time to wrap up.',say:'',
+  choices:[
+   {t:'Call central, take the account off test, then go reset the panel.',r:'poor',f:'Wrong order. If anything is still latched or a device is still in alarm, the moment you go back in service, central gets a real alarm and dispatches. Restore and reset first. The call comes last.'},
+   {t:'Restore every device, remove every bypass, reset the panel, confirm it’s normal apart from the documented ground fault, then call central to compare signals and take the account off test.',r:'best',f:'Right. The building is back to normal before monitoring goes live. Comparing central’s log with your test sheet also catches any signal you thought you sent that never arrived.'},
+   {t:'Leave the panel silenced because the ground fault trouble is still beeping.',r:'poor',f:'A silenced panel can hide the next real alarm or trouble from the people in the building. The ground fault is documented and reported. Leave the panel in its normal state and let the customer approve the repair.'}]},
+ {stamp:'11:52 · Front desk',text:'Panel is normal (apart from the documented ground fault) and the account is back in service. Denise asks how it went.',say:'',
+  choices:[
+   {t:'"All good!" Hand her the report and go.',r:'fair',f:'The report is there, but Denise has to make decisions: a ground fault repair and a communicator outage the owner needs to know about. Walk through it with her.'},
+   {t:'Walk through the deficiencies in plain language: the ground fault, the communicator outage and the fix, and what needs approval. Get a signature and leave a copy.',r:'best',f:'This is what turns a one-time inspection into a customer who calls you first. Clear explanations build trust and turn deficiencies into approved repair work.'},
+   {t:'Tell her the system is "basically fine" so she doesn’t worry.',r:'poor',f:'Downplaying a deficiency in a life safety system creates liability for you and your company. Give the facts calmly, and let the owner decide with full information.'}]}
+];
+const PTS={best:2,fair:1,poor:0};
+let si=0,score=0;
+function renderScn(){
+  const box=$('scn');
+  if(si>=SCN.length){
+    const max=SCN.length*2,pct=Math.round(score/max*100);
+    const grade=pct>=85?'Ready to ride along':pct>=60?'Getting there':'Review lessons 2 and 3';
+    box.innerHTML=`<div class="scn-progress"><i style="width:100%"></i></div><div class="scn-body fade-in">
+      <span class="stamp">Inspection complete</span><h3 style="font-size:2rem">${score} / ${max} · ${grade}</h3>
+      <p class="scn-text">${pct>=85?'You worked like a tech who’s been doing this for years. The habits you just used (check in, document, call it in, verify, restore) carry over to every building you’ll ever work in.':'Go back over the decisions you got wrong. Each one maps to a step in Lesson 3. Those steps are what keep a routine inspection from turning into a dispatch, a lawsuit, or a building that isn’t really protected.'}</p>
+      <button class="primary" type="button" id="scnAgain">Run it again</button></div>`;
+    $('scnAgain').onclick=()=>{si=0;score=0;renderScn();};return;
+  }
+  const n=SCN[si];
+  box.innerHTML=`<div class="scn-bar"><span>Decision ${si+1} of ${SCN.length}</span><span>Score ${score}</span></div>
+   <div class="scn-progress"><i style="width:${si/SCN.length*100}%"></i></div>
+   <div class="scn-body fade-in"><span class="stamp">${n.stamp}</span>
+   <p class="scn-text">${n.text}${n.say?`<span class="say">${n.say}</span>`:''}</p>
+   <div class="choices">${n.choices.map((c,i)=>`<button class="choice" type="button" data-i="${i}"><span class="k">${'ABC'[i]}</span><span>${c.t}</span></button>`).join('')}</div>
+   <div id="fb"></div></div>`;
+  box.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
+    const c=n.choices[+b.dataset.i]; score+=PTS[c.r];
+    box.querySelectorAll('.choice').forEach((x,i)=>{x.disabled=true;if(n.choices[i].r==='best')x.classList.add('best');});
+    b.classList.add('picked',c.r);
+    const col=c.r==='best'?'var(--ok)':c.r==='fair'?'var(--sup)':'var(--alarm)';
+    const lab=c.r==='best'?'Best call':c.r==='fair'?'Partly right':'Costly mistake';
+    $('fb').innerHTML=`<div class="feedback fade-in" style="--c:${col}"><b>${lab}</b><p>${c.f}</p></div>
+      <button class="primary" type="button" id="scnNext" style="margin-top:14px">${si+1<SCN.length?'Next decision':'See results'}</button>`;
+    $('scnNext').onclick=()=>{si++;renderScn();$('scenario').scrollIntoView({behavior:reduce?'auto':'smooth'});};
+    $('scnNext').focus({preventScroll:true});
+  });
+}
+renderScn();
+
+/* ---------- quiz ---------- */
+const Q=[
+ {q:'A tamper switch on a sprinkler control valve sends which signal?',o:['Alarm','Supervisory','Trouble'],a:1,w:'A closed or partly closed valve means the sprinklers may not get water. That’s an off-normal condition of a protection system, so it’s supervisory.'},
+ {q:'A sprinkler waterflow switch sends which signal?',o:['Alarm','Supervisory','Trouble'],a:0,w:'Water flowing in the system means a sprinkler may have opened because of a fire. Waterflow is an alarm. A retard delay filters out pressure surges so they don’t cause false alarms.'},
+ {q:'The panel loses its 120V AC power and runs on batteries. What shows?',o:['Alarm','Supervisory','Trouble'],a:2,w:'Loss of primary power is a fault in the system itself, so it’s trouble. Batteries carry the system, typically 24 hours of standby plus 5 minutes of alarm on most systems.'},
+ {q:'What does pressing Acknowledge do?',o:['Silences the building horns','Tells the panel someone has seen the event and quiets the panel buzzer','Clears the event'],a:1,w:'Acknowledge confirms a person has seen the event. It doesn’t silence notification appliances or clear anything.'},
+ {q:'You silence the horns after an alarm. What state is the panel in?',o:['Normal','Still in alarm until devices are restored and the panel is reset','Trouble'],a:1,w:'Silence only stops the notification appliances. The alarm stays latched until the device is restored and the panel is reset.'},
+ {q:'Who do you call first, before testing any device on a monitored system?',o:['The fire department','The central station, to put the account on test','The panel manufacturer'],a:1,w:'The central station receives the signals and dispatches responders. Put the account on test with the account number and passcode, and record the operator number. Some areas also require notifying the fire department.'},
+ {q:'You arrive and the panel already shows a trouble. What first?',o:['Reset it','Document it as found (photo and report) and tell the building contact','Ignore it if it’s old'],a:1,w:'Document existing conditions before touching anything. It protects you, and it’s a deficiency the owner needs to know about.'},
+ {q:'Why do conventional circuits have an end-of-line (EOL) resistor?',o:['To limit current to the horns','So the panel can supervise the wiring and detect an open circuit','To make detectors more sensitive'],a:1,w:'The panel watches a small current through the EOL resistor. If a wire breaks, the current stops and the panel reports trouble. That’s how wiring is "supervised."'},
+ {q:'A valve supervisory switch must signal within how much handwheel movement?',o:['Two revolutions, or 1/5 of the valve’s travel','Ten revolutions','Only when fully closed'],a:0,w:'NFPA 72 requires the switch to operate within two revolutions of the handwheel or when the valve has moved one-fifth of its travel from normal. Partly closed valves are a common way systems get left impaired.'}
+];
+let answered=0,right=0;
+$('quiz').innerHTML=Q.map((x,i)=>`<div class="q" data-q="${i}"><strong>${i+1}. ${x.q}</strong><div class="opts">${x.o.map((o,j)=>`<button type="button" data-j="${j}">${o}</button>`).join('')}</div><p class="why" hidden></p></div>`).join('');
+$('quiz').querySelectorAll('.q').forEach(qe=>{
+  const x=Q[+qe.dataset.q];
+  qe.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const j=+b.dataset.j; answered++; if(j===x.a)right++;
+    qe.querySelectorAll('button').forEach((bb,k)=>{bb.disabled=true;if(k===x.a)bb.classList.add('right');else if(k===j)bb.classList.add('wrong');});
+    const w=qe.querySelector('.why');w.hidden=false;w.textContent=(j===x.a?'Correct. ':'Not quite. ')+x.w;
+    $('qScore').textContent=`${right} correct · ${answered} of ${Q.length} answered`;
+    if(answered===Q.length)$('qPct').textContent=right>=8?'Passed: Module 1 complete':'Review and retake: pass mark is 8 of 9';
+  });
+});
+})();
+</script>
