@@ -166,6 +166,34 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
 @media (max-width:700px){.fieldcard{grid-template-columns:1fr}}
 .fieldcard ul{margin:8px 0 0;padding-left:1.2em;font-size:.93rem;display:flex;flex-direction:column;gap:4px}
 .fine{font-size:.82rem;color:var(--muted);max-width:80ch}
+
+/* panel-type choice */
+.picker{background:var(--surface);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:12px}
+.picker-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.picker-opts{grid-template-columns:1fr}}
+.pick{text-align:left;background:var(--surface-2);color:var(--ink);border:2px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.pick strong{font-family:var(--f-display);font-size:1.3rem;text-transform:uppercase;letter-spacing:.04em}
+.pick span{font-size:.88rem;color:var(--muted)}
+.pick[aria-pressed="true"]{border-color:var(--ink);background:var(--surface)}
+.pick[aria-pressed="true"] strong::after{content:"  ✓ selected";font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;color:var(--ok)}
+.seg{display:inline-flex;border:1px solid var(--line);background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--muted);padding:8px 14px;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.sim-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:700px){.compare{grid-template-columns:1fr}}
+.compare article{background:var(--surface);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0;font-size:.93rem}
+.compare article.current{border:2px solid var(--ink)}
+.compare ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.zones{display:grid;gap:4px;background:rgba(0,0,0,.25);padding:10px;border-radius:3px}
+.zone{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em}
+.zone i{width:12px;height:12px;border-radius:50%;background:#4a0d12;border:2px solid #2a0508;flex:none}
+.zone.alarm i{background:#ff3344;box-shadow:0 0 8px #ff3344}
+.zone.sup i,.zone.trouble i{background:#ffb020;box-shadow:0 0 8px #ffb020}
+.zone.trouble i{animation:blink 1s steps(1) infinite}
+.wire.ghost{stroke:none}
+.eol{fill:none;stroke:var(--ink);stroke-width:1.6}
+.dev.blocked .ring{stroke-dasharray:5 4}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -178,6 +206,13 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
       <span>Time <strong>≈ 35 min</strong></span>
       <span>Level <strong>New hire / apprentice</strong></span>
       <span>Reference <strong>NFPA 72, Ch. 10, 14 &amp; 23 (edition adopted locally)</strong></span>
+    </div>
+    <div class="picker" role="group" aria-labelledby="pickTitle">
+      <span class="eyebrow" id="pickTitle">Choose your panel type · you can switch any time</span>
+      <div class="picker-opts">
+        <button type="button" class="pick" data-mode="addressable" aria-pressed="true"><strong>Addressable</strong><span>Every device has its own address. The panel tells you exactly which device and where it is. Most new commercial work.</span></button>
+        <button type="button" class="pick" data-mode="conventional" aria-pressed="false"><strong>Conventional</strong><span>Devices are wired in zones. The panel tells you the zone, and you walk it to find the device. Common in older and smaller buildings.</span></button>
+      </div>
     </div>
   </header>
 
@@ -200,13 +235,38 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
     </div>
     <div class="prose stack">
       <p>Every system has three parts. <strong>Initiating devices</strong> sense a problem (smoke detectors, heat detectors, pull stations, sprinkler waterflow and valve switches). They report to the <strong>fire alarm control panel</strong> (FACP; NFPA 72 calls it the control unit). The panel decides what the signal means and runs the <strong>outputs</strong>: horns and strobes, elevator recall, door holders, fan shutdown, and the <strong>communicator</strong> that sends the signal to a central monitoring station.</p>
-      <p>Addressable devices sit on a <strong>signaling line circuit (SLC)</strong> and each one reports its own address, like <span style="font-family:var(--f-mono)">L1D014</span>. Older conventional systems group devices on an <strong>initiating device circuit (IDC)</strong> with an end-of-line resistor so the panel can tell if a wire is cut. Horns and strobes run on <strong>notification appliance circuits (NACs)</strong>.</p>
+      <p>How devices are wired to the panel depends on the panel type. Horns and strobes run on <strong>notification appliance circuits (NACs)</strong> either way.</p>
     </div>
 
-    <div class="tryit">
-      <div><b>TRY 1</b>Click the pull station. Watch the signal travel. Then try <em>Silence</em>, then <em>Reset</em>. Why won't it reset?</div>
-      <div><b>TRY 2</b>Click the tamper switch. It's a different color and a different signal. Why?</div>
-      <div><b>TRY 3</b>Turn <em>On test</em> off and set off a smoke detector. Look at the central station.</div>
+    <div class="compare">
+      <article data-for="addressable">
+        <h3>Addressable</h3>
+        <ul>
+          <li>Devices share one <strong>signaling line circuit (SLC)</strong>, also called a loop.</li>
+          <li>Each device has an address, like <span style="font-family:var(--f-mono)">L1D014</span> (loop 1, detector 14), and a text label programmed into the panel.</li>
+          <li>The panel shows the exact device and location, and can report a single device as missing or dirty.</li>
+          <li>The panel polls every device constantly, so a cut wire or a missing detector shows up as trouble right away.</li>
+        </ul>
+      </article>
+      <article data-for="conventional">
+        <h3>Conventional</h3>
+        <ul>
+          <li>Devices are wired in groups called <strong>zones</strong>, each on its own <strong>initiating device circuit (IDC)</strong>.</li>
+          <li>The panel only knows which zone is in alarm, not which device. You walk the zone and look for the detector with its LED latched on, or the pull station with its handle down.</li>
+          <li>An <strong>end-of-line (EOL) resistor</strong> at the last device lets the panel supervise the wire. If the wire is cut, the panel shows trouble.</li>
+          <li>On a Class B circuit, every device past a break is cut off from the panel until the wire is repaired.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="tryit" id="tryit"></div>
+
+    <div class="sim-bar">
+      <span class="eyebrow" id="simLabel">Simulator · addressable panel</span>
+      <div class="seg" role="group" aria-label="Panel type">
+        <button type="button" data-mode="addressable" aria-pressed="true">Addressable</button>
+        <button type="button" data-mode="conventional" aria-pressed="false">Conventional</button>
+      </div>
     </div>
 
     <div class="diagram">
@@ -257,6 +317,7 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
       <div class="facp" aria-label="Fire alarm control panel simulator">
         <div class="facp-top"><span>Fire Alarm Control Panel</span><small>HARBOR POINT MOB</small></div>
         <div class="lcd" id="lcd" aria-live="polite"></div>
+        <div class="zones" id="zones" hidden></div>
         <div class="leds">
           <div class="led green on" id="ledAC"><i></i>AC power</div>
           <div class="led red" id="ledA"><i></i>Alarm</div>
@@ -278,11 +339,7 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
         </div>
         <div class="card stack" style="gap:10px">
           <strong>Create a trouble condition</strong>
-          <div class="trouble-btns">
-            <button type="button" class="chip-btn" data-trouble="open">Cut NAC 2 wire</button>
-            <button type="button" class="chip-btn" data-trouble="ac">Kill AC power</button>
-            <button type="button" class="chip-btn" data-trouble="ground">Ground fault</button>
-          </div>
+          <div class="trouble-btns" id="troubleBtns"></div>
         </div>
         <div class="card stack" style="gap:8px">
           <strong>Panel history</strong>
@@ -372,7 +429,7 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
       <span class="eyebrow">Lesson 4 · Field scenario</span>
       <h2>Annual inspection: Harbor Point Medical Offices</h2>
     </div>
-    <p class="prose">Three-story medical office building, addressable system, monitored by a central station. You're riding with Marcus, a NICET Level III tech. Seven decisions. Choose what you would actually do.</p>
+    <p class="prose">Three-story medical office building, <span id="scnSys">addressable</span> system, monitored by a central station. You're riding with Marcus, a NICET Level III tech. Seven decisions. Choose what you would actually do.</p>
     <div class="scenario" id="scn"></div>
   </section>
 
@@ -383,7 +440,7 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
       <h2>Knowledge check</h2>
     </div>
     <div class="quiz" id="quiz"></div>
-    <div class="scoreline"><span id="qScore">0 of 9 answered</span><span id="qPct" class="muted">Pass mark: 8 of 9</span></div>
+    <div class="scoreline"><span id="qScore">0 of 10 answered</span><span id="qPct" class="muted">Pass mark: 9 of 10</span></div>
   </section>
 
   <!-- 6 FIELD CARD -->
@@ -402,6 +459,14 @@ svg text{font-family:var(--f-mono);fill:var(--ink)}
         <li><strong>Acknowledge:</strong> "I've seen it." Quiets the panel buzzer.</li>
         <li><strong>Silence:</strong> stops the horns, but the panel stays in alarm</li>
         <li><strong>Reset:</strong> clears latched events. Restore the device first.</li>
+      </ul></div>
+      <div><h3>Addressable</h3><ul>
+        <li>Display names the device and address (L1D014)</li>
+        <li>Missing or dirty devices report on their own</li>
+      </ul></div>
+      <div><h3>Conventional</h3><ul>
+        <li>Panel shows the zone only. Walk it to find the device.</li>
+        <li>EOL resistor at the last device. A cut wire is trouble, and devices past the break are lost.</li>
       </ul></div>
       <div><h3>Before you test</h3><ul>
         <li>Check in with the building contact</li>
@@ -429,42 +494,77 @@ const $=id=>document.getElementById(id);
 
 /* ---------- devices ---------- */
 const DEVICES=[
-  {key:'smoke',glyph:'S',label:'Smoke detector',type:'alarm',text:'SMOKE DET 2ND FL ELEV LOBBY',addr:'L1D014'},
-  {key:'heat',glyph:'H',label:'Heat detector',type:'alarm',text:'HEAT DET MECH ROOM 104',addr:'L1D022'},
-  {key:'pull',glyph:'P',label:'Pull station',type:'alarm',text:'PULL STA 1ST FL LOBBY',addr:'L1M003'},
-  {key:'flow',glyph:'WF',label:'Waterflow switch',type:'alarm',text:'WATERFLOW RISER 1',addr:'L1M010'},
-  {key:'tamper',glyph:'TS',label:'Valve tamper switch',type:'sup',text:'VALVE TAMPER RISER 1',addr:'L1M011'},
-  {key:'duct',glyph:'D',label:'Duct smoke detector',type:'sup',text:'DUCT DET AHU-2 RETURN',addr:'L1D030'}
+  {key:'smoke',glyph:'S',label:'Smoke detector',type:'alarm',text:'SMOKE DET 2ND FL ELEV LOBBY',addr:'L1D014',zone:1},
+  {key:'heat',glyph:'H',label:'Heat detector',type:'alarm',text:'HEAT DET MECH ROOM 104',addr:'L1D022',zone:1},
+  {key:'pull',glyph:'P',label:'Pull station',type:'alarm',text:'PULL STA 1ST FL LOBBY',addr:'L1M003',zone:2},
+  {key:'flow',glyph:'WF',label:'Waterflow switch',type:'alarm',text:'WATERFLOW RISER 1',addr:'L1M010',zone:3},
+  {key:'tamper',glyph:'TS',label:'Valve tamper switch',type:'sup',text:'VALVE TAMPER RISER 1',addr:'L1M011',zone:4},
+  {key:'duct',glyph:'D',label:'Duct smoke detector',type:'sup',text:'DUCT DET AHU-2 RETURN',addr:'L1D030',zone:5}
 ];
+const ZONES={1:{name:'SMOKE/HEAT DETECTORS',type:'alarm'},2:{name:'PULL STATIONS',type:'alarm'},3:{name:'WATERFLOW RISER 1',type:'alarm'},4:{name:'VALVE SUPERVISORY',type:'sup'},5:{name:'DUCT DETECTORS',type:'sup'}};
 const TROUBLES={
-  open:{text:'OPEN CIRCUIT NAC 2',addr:'P1.NAC2'},
-  ac:{text:'AC POWER LOSS',addr:'PANEL'},
-  ground:{text:'GROUND FAULT',addr:'PANEL'}
+  open:{label:'Cut NAC 2 wire',text:'OPEN CIRCUIT NAC 2',addr:'P1.NAC2'},
+  ac:{label:'Kill AC power',text:'AC POWER LOSS',addr:'PANEL'},
+  ground:{label:'Ground fault',text:'GROUND FAULT',addr:'PANEL'},
+  missing:{label:'Remove smoke detector head',text:'MISSING DEVICE SMOKE DET 2ND FL ELEV LOBBY',addr:'L1D014',mode:'addressable',blocks:['smoke']},
+  z1open:{label:'Cut Zone 1 wire',text:'ZONE 1 OPEN CIRCUIT',addr:'IDC 1',mode:'conventional',blocks:['smoke','heat']}
+};
+const TRY={
+  addressable:[
+    'Click the pull station. Watch the signal travel. Then try <em>Silence</em>, then <em>Reset</em>. Why won’t it reset?',
+    'Click the tamper switch. It’s a different color and a different signal. Why?',
+    'Click <em>Remove smoke detector head</em>, then try to set off that detector. What does the panel already know?',
+    'Turn <em>On test</em> off and set off a smoke detector. Look at the central station.'],
+  conventional:[
+    'Click the pull station. The panel shows a zone, not a device. How would you find which pull station it was?',
+    'Set off the smoke detector, then the heat detector. Why doesn’t the second one add a new event?',
+    'Click <em>Cut Zone 1 wire</em>, then set off the smoke detector. Why does nothing reach the panel?',
+    'Turn <em>On test</em> off and set off any detector. Look at the central station.']
 };
 const TYPE_NAME={alarm:'ALARM',sup:'SUPERVISORY',trouble:'TROUBLE'};
 const PRI={alarm:0,sup:1,trouble:2};
+let MODE='addressable';
+try{if(localStorage.getItem('atf-panel-mode')==='conventional')MODE='conventional';}catch(e){}
 
 const devG=$('devices'), wireG=$('wires');
-DEVICES.forEach((d,i)=>{
-  const y=72+i*67, py=150+i*36;
-  const w=document.createElementNS(NS,'path');
-  w.setAttribute('d',`M96 ${y} C240 ${y} 230 ${py} 370 ${py}`);
-  w.setAttribute('class','wire'); w.id='w-'+d.key; wireG.appendChild(w);
-  const g=document.createElementNS(NS,'g');
-  g.setAttribute('class','dev t-'+d.type); g.setAttribute('tabindex','0'); g.setAttribute('role','button');
-  g.setAttribute('aria-label',d.label+' — activate or restore'); g.dataset.key=d.key;
-  const isPull=d.key==='pull';
-  g.innerHTML=(isPull?`<rect class="ring" x="44" y="${y-22}" width="44" height="44" rx="4"/>`:`<circle class="ring" cx="66" cy="${y}" r="24"/>`)+
-    `<text class="glyph" x="66" y="${y+5}" text-anchor="middle" style="font-size:14px;font-weight:600">${d.glyph}</text>`+
-    `<text class="dev-label" x="100" y="${y-28}" >${d.label}</text>`;
-  devG.appendChild(g);
-  g.addEventListener('click',()=>toggleDevice(d));
-  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleDevice(d);}});
-});
+const dynG=document.createElementNS(NS,'g'); wireG.appendChild(dynG);
+const decoG=document.createElementNS(NS,'g'); $('sys').insertBefore(decoG,devG);
+function svgEl(tag,attrs,parent,html){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(html!=null)e.innerHTML=html;parent.appendChild(e);return e;}
+const zonePy=z=>150+(z-1)*45;
+
+function build(){
+  dynG.innerHTML='';decoG.innerHTML='';devG.innerHTML='';
+  const conv=MODE==='conventional';
+  DEVICES.forEach((d,i)=>{
+    const y=72+i*67;
+    let path,cls='wire';
+    if(!conv) path=`M96 ${y} H200 V230 H370`;
+    else if(d.key==='heat'){path=`M66 ${y-24} L66 ${y-43} L96 ${y-67} C240 ${y-67} 230 ${zonePy(1)} 370 ${zonePy(1)}`;cls='wire ghost';
+      svgEl('path',{d:`M66 ${y-24} V${y-43}`,class:'wire'},dynG);}
+    else path=`M96 ${y} C240 ${y} 230 ${zonePy(d.zone)} 370 ${zonePy(d.zone)}`;
+    svgEl('path',{d:path,class:cls,id:'w-'+d.key},dynG);
+    svgEl('text',{x:100,y:y-12,class:'dev-label',style:'font-size:10px;letter-spacing:.06em'},decoG,conv?`ZONE ${d.zone}`:d.addr);
+    if(conv&&d.key!=='smoke'){
+      svgEl('path',{d:`M42 ${y} H36 L33 ${y-5} L29 ${y+5} L25 ${y-5} L21 ${y+5} L18 ${y} H12`,class:'eol'},decoG);
+      svgEl('text',{x:27,y:y+20,'text-anchor':'middle',class:'dev-label',style:'font-size:9px'},decoG,'EOL');
+    }
+    const g=svgEl('g',{class:'dev t-'+d.type,tabindex:'0',role:'button','aria-label':d.label+' — activate or restore'},devG);
+    g.dataset.key=d.key;
+    g.innerHTML=(d.key==='pull'?`<rect class="ring" x="44" y="${y-22}" width="44" height="44" rx="4"/>`:`<circle class="ring" cx="66" cy="${y}" r="24"/>`)+
+      `<text class="glyph" x="66" y="${y+5}" text-anchor="middle" style="font-size:14px;font-weight:600">${d.glyph}</text>`+
+      `<text class="dev-label" x="100" y="${y-28}">${d.label}</text>`;
+    g.addEventListener('click',()=>toggleDevice(d));
+    g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleDevice(d);}});
+  });
+  if(!conv) svgEl('text',{x:206,y:222,class:'dev-label',style:'font-size:10px;letter-spacing:.08em'},decoG,'SLC LOOP 1');
+  else{
+    for(let z=1;z<=5;z++) svgEl('text',{x:364,y:zonePy(z)-5,'text-anchor':'end',class:'dev-label',style:'font-size:10px'},decoG,'IDC '+z);
+    svgEl('text',{id:'breakMark',x:150,y:82,'text-anchor':'middle',style:'fill:var(--alarm);font-size:22px;font-weight:600',visibility:'hidden'},decoG,'✕');
+  }
+}
 [['nac1','M540 170 C640 170 640 70 722 70'],['nac2','M540 200 C640 200 640 185 722 185'],
  ['comm','M540 310 C575 310 560 375 590 375'],['phone','M700 375 L745 375']].forEach(([id,d])=>{
-  const p=document.createElementNS(NS,'path'); p.setAttribute('d',d); p.id='w-'+id;
-  p.setAttribute('class','wire'+(id==='phone'?' dash':'')); wireG.appendChild(p);
+  svgEl('path',{d,id:'w-'+id,class:'wire'+(id==='phone'?' dash':'')},wireG);
 });
 
 /* ---------- state ---------- */
@@ -485,10 +585,12 @@ function pulse(id,color,dur){
 }
 const colorOf=t=>getComputedStyle(document.documentElement).getPropertyValue(t==='alarm'?'--alarm':t==='sup'?'--sup':'--trouble').trim();
 
-async function addEvent(type,key,text,addr,viaWire){
+async function addEvent(type,key,text,addr,viaWire,zone){
   if(S.events.some(e=>e.key===key))return;
+  const mode=MODE;
   if(viaWire) await pulse(viaWire,colorOf(type));
-  const ev={type,key,text,addr,acked:false,time:now(),n:++S.seq};
+  if(mode!==MODE)return;
+  const ev={type,key,text,addr,zone,acked:false,time:now(),n:++S.seq};
   S.events.push(ev);
   log(`<strong style="color:${colorOf(type)}">${TYPE_NAME[type]}</strong> ${text} ${addr}`);
   if(type==='alarm'&&S.silenced){S.silenced=false;log('New alarm — notification appliances resound');}
@@ -496,7 +598,6 @@ async function addEvent(type,key,text,addr,viaWire){
 }
 async function transmit(ev){
   if(ev.type==='alarm'&&!S.silenced) Promise.all([pulse('nac1','#fff',500),pulse('nac2','#fff',500)]);
-  if(S.troubles.ac && ev.key!=='ac'){} // panel on battery: still transmits
   await pulse('comm',colorOf(ev.type)); await pulse('phone',colorOf(ev.type),400);
   const m=$('csMsg'),g=$('csG');
   let cls='good',msg,l1,l2;
@@ -507,27 +608,71 @@ async function transmit(ev){
   m.className='cs-msg '+cls; m.textContent=msg; $('csL1').textContent=l1; $('csL2').textContent=l2;
   g.classList.toggle('dispatch',cls==='bad');
 }
+function resetCentral(){
+  $('csMsg').className='cs-msg '+(S.onTest?'good':'warn');
+  $('csMsg').textContent=S.onTest?'Account on test. Signals will be logged, no dispatch.':'Account in service. Alarms will be dispatched to the fire department.';
+  $('csL1').textContent='Monitoring';$('csL2').textContent=S.onTest?'account on test':'in service';$('csG').classList.remove('dispatch');
+}
 
+function blockerFor(key){return Object.keys(S.troubles).find(k=>S.troubles[k]&&(TROUBLES[k].blocks||[]).includes(key));}
+function stillActive(e){return e.zone?DEVICES.some(d=>d.zone===e.zone&&S.active[d.key]):!!S.active[e.key];}
 function toggleDevice(d){
   const el=devG.querySelector(`[data-key="${d.key}"]`);
-  if(!S.active[d.key]){S.active[d.key]=true;el.classList.add('active');addEvent(d.type,d.key,d.text,d.addr,d.key);}
-  else{S.active[d.key]=false;el.classList.remove('active');
+  if(!S.active[d.key]){
+    const b=blockerFor(d.key);
+    if(b){log(b==='missing'
+      ?'Smoke detector head is off its base, so it can’t sense anything. The panel already reported it MISSING.'
+      :`${d.label} activated, but Zone 1 is cut. The signal can’t reach the panel. That’s why an open circuit is a trouble signal.`);return;}
+    S.active[d.key]=true;el.classList.add('active');
+    if(MODE==='addressable') addEvent(d.type,d.key,d.text,d.addr,d.key);
+    else{
+      const z=ZONES[d.zone],key='z'+d.zone;
+      if(S.events.some(e=>e.key===key)) pulse(d.key,colorOf(d.type)).then(()=>log(`${d.label} activated. Zone ${d.zone} is already in ${TYPE_NAME[z.type].toLowerCase()}, so the panel shows nothing new. It can’t tell which device it was.`));
+      else addEvent(z.type,key,`ZONE ${d.zone} ${z.name}`,`IDC ${d.zone}`,d.key,d.zone);
+    }
+  }else{S.active[d.key]=false;el.classList.remove('active');
     log(`${d.label} restored${d.key==='pull'?' (reset with key)':''} — press Reset to clear`);render();}
 }
-document.querySelectorAll('[data-trouble]').forEach(b=>b.addEventListener('click',()=>{
-  const k=b.dataset.trouble,t=TROUBLES[k];
-  if(!S.troubles[k]){S.troubles[k]=true;b.classList.add('active');addEvent('trouble',k,t.text,t.addr,null);}
-  else{S.troubles[k]=false;b.classList.remove('active');S.events=S.events.filter(e=>e.key!==k);
-    log(`TROUBLE RESTORED ${t.text}`);S.view=0;render();}
-}));
+function updateBlocked(){
+  DEVICES.forEach(d=>{const g=devG.querySelector(`[data-key="${d.key}"]`);if(g)g.classList.toggle('blocked',!!blockerFor(d.key));});
+  const bm=$('breakMark');if(bm)bm.setAttribute('visibility',S.troubles.z1open?'visible':'hidden');
+}
+function renderTroubleBtns(){
+  const box=$('troubleBtns');box.innerHTML='';
+  Object.keys(TROUBLES).filter(k=>!TROUBLES[k].mode||TROUBLES[k].mode===MODE).forEach(k=>{
+    const t=TROUBLES[k],b=document.createElement('button');
+    b.type='button';b.className='chip-btn';b.textContent=t.label;box.appendChild(b);
+    b.onclick=()=>{
+      if(!S.troubles[k]){S.troubles[k]=true;b.classList.add('active');addEvent('trouble',k,t.text,t.addr,null);}
+      else{S.troubles[k]=false;b.classList.remove('active');S.events=S.events.filter(e=>e.key!==k);
+        log(`TROUBLE RESTORED ${t.text}`);S.view=0;render();}
+      updateBlocked();
+    };
+  });
+}
+function setMode(m,quiet){
+  MODE=m;try{localStorage.setItem('atf-panel-mode',m);}catch(e){}
+  S.active={};S.troubles={};S.events=[];S.silenced=false;S.view=0;
+  build();renderTroubleBtns();updateBlocked();
+  document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===m)));
+  document.querySelectorAll('.compare article').forEach(a=>a.classList.toggle('current',a.dataset.for===m));
+  $('tryit').innerHTML=TRY[m].map((t,i)=>`<div><b>TRY ${i+1}</b>${t}</div>`).join('');
+  $('simLabel').textContent='Simulator · '+m+' panel';
+  $('scnSys').textContent=m;
+  $('zones').hidden=m!=='conventional';
+  resetCentral();
+  if(!quiet)log(`Switched to ${m} panel — system normal`);
+  render();
+}
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.mode!==MODE)setMode(b.dataset.mode);}));
 
 $('kAck').onclick=()=>{const n=S.events.filter(e=>!e.acked).length;S.events.forEach(e=>e.acked=true);log(n?`Acknowledged ${n} event(s) — panel buzzer quiet`:'Acknowledge: nothing new');render();};
 $('kSil').onclick=()=>{if(!S.events.some(e=>e.type==='alarm')){log('Silence: no alarm active');return;}
   S.silenced=true;log('Notification appliances SILENCED — panel still in alarm');render();};
 $('kReset').onclick=()=>{
   if(!S.events.some(e=>e.type!=='trouble')){log('Reset: nothing latched to clear');render();return;}
-  const stuck=S.events.filter(e=>e.type!=='trouble'&&S.active[e.key]);
-  S.events=S.events.filter(e=>e.type==='trouble'||S.active[e.key]);
+  const stuck=S.events.filter(e=>e.type!=='trouble'&&stillActive(e));
+  S.events=S.events.filter(e=>e.type==='trouble'||stillActive(e));
   S.silenced=false;
   log('SYSTEM RESET');
   stuck.forEach(e=>{e.acked=false;log(`<strong style="color:${colorOf(e.type)}">${TYPE_NAME[e.type]}</strong> returns: ${e.text} — device not restored`);});
@@ -535,8 +680,7 @@ $('kReset').onclick=()=>{
   S.view=0;render();};
 $('kNext').onclick=()=>{if(S.events.length){S.view=(S.view+1)%S.events.length;render();}};
 $('testBtn').onclick=()=>{S.onTest=!S.onTest;const b=$('testBtn');b.classList.toggle('on',S.onTest);b.textContent=S.onTest?'ON TEST':'IN SERVICE';b.setAttribute('aria-pressed',S.onTest);
-  $('csMsg').className='cs-msg '+(S.onTest?'good':'warn');$('csMsg').textContent=S.onTest?'Account on test. Signals will be logged, no dispatch.':'Account in service. Alarms will be dispatched to the fire department.';
-  $('csL1').textContent='Monitoring';$('csL2').textContent=S.onTest?'account on test':'in service';$('csG').classList.remove('dispatch');
+  resetCentral();
   log(S.onTest?'Central station: account placed ON TEST':'Central station: account IN SERVICE');};
 
 function sorted(){return S.events.slice().sort((a,b)=>PRI[a.type]-PRI[b.type]||b.n-a.n);}
@@ -559,9 +703,14 @@ function render(){
   const sounding=has('alarm')&&!S.silenced;
   $('nac1g').classList.toggle('flashing',sounding);
   $('nac2g').classList.toggle('flashing',sounding&&!S.troubles.open);
+  if(MODE==='conventional'){
+    $('zones').innerHTML=Object.keys(ZONES).map(z=>{const e=ev.find(x=>x.key==='z'+z);
+      const st=e?e.type:(z==='1'&&S.troubles.z1open?'trouble':'');
+      return `<div class="zone ${st}"><i></i>Z${z} ${ZONES[z].name}</div>`;}).join('');
+  }
 }
 log('Panel powered up — system normal');
-render();
+setMode(MODE,true);
 
 /* ---------- scenario ---------- */
 const SCN=[
@@ -585,7 +734,7 @@ const SCN=[
    {t:'Bypass the whole panel so nothing activates while we test.',r:'poor',f:'If you disable the whole system, a real fire during your inspection goes unreported. You also can’t prove the outputs work, which is part of the test. Bypass only what you have to, with the owner’s agreement, and keep track of it.'},
    {t:'Plan it with Denise: decide which outputs to bypass and which to test live, coordinate the elevator recall test, and write down every bypass so it gets restored.',r:'best',f:'Right. Elevator recall with patients in wheelchairs on 2 needs planning, not surprises. Writing down each bypass is what makes sure the building is fully restored when you leave.'},
    {t:'Leave everything live. Outputs are supposed to work.',r:'fair',f:'They should work, and testing them matters. But an unannounced elevator recall with a dialysis patient waiting, or fans shutting down mid-procedure, is a planning failure. Test outputs on purpose, with the people affected in the loop.'}]},
- {stamp:'09:20 · 1st floor lobby',text:'Occupants have been notified. You activate the lobby pull station. Horns and strobes work and the panel shows ALARM · PULL STA 1ST FL LOBBY. You call central to confirm.',say:'Operator: "I don’t show anything from that account in the last 20 minutes."',
+ {stamp:'09:20 · 1st floor lobby',text:()=>`Occupants have been notified. You activate the lobby pull station. Horns and strobes work and the panel shows ${MODE==='conventional'?'ZONE 2 ALARM · PULL STATIONS':'ALARM · PULL STA 1ST FL LOBBY'}. You call central to confirm.`,say:'Operator: "I don’t show anything from that account in the last 20 minutes."',
   choices:[
    {t:'It’s probably delayed. Keep testing and check again at the end.',r:'poor',f:'If central didn’t get it, this building isn’t monitored, and has maybe not been for a while. Keep going and you’ll test 80 more devices without knowing whether any signal leaves the building.'},
    {t:'Stop testing. Check the communicator status on the panel, test again, and if it still fails, tell Marcus and Denise, log it as a deficiency, and follow company procedure for an unmonitored building.',r:'best',f:'Right. A communicator that doesn’t transmit is one of the most serious things you can find. Marcus finds the cellular communicator showing no signal since a carrier upgrade. The owner gets notified the same day, and the AHJ may need to be told and a fire watch considered while it’s down.'},
@@ -618,7 +767,7 @@ function renderScn(){
   box.innerHTML=`<div class="scn-bar"><span>Decision ${si+1} of ${SCN.length}</span><span>Score ${score}</span></div>
    <div class="scn-progress"><i style="width:${si/SCN.length*100}%"></i></div>
    <div class="scn-body fade-in"><span class="stamp">${n.stamp}</span>
-   <p class="scn-text">${n.text}${n.say?`<span class="say">${n.say}</span>`:''}</p>
+   <p class="scn-text">${typeof n.text==="function"?n.text():n.text}${n.say?`<span class="say">${n.say}</span>`:''}</p>
    <div class="choices">${n.choices.map((c,i)=>`<button class="choice" type="button" data-i="${i}"><span class="k">${'ABC'[i]}</span><span>${c.t}</span></button>`).join('')}</div>
    <div id="fb"></div></div>`;
   box.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
@@ -645,7 +794,8 @@ const Q=[
  {q:'Who do you call first, before testing any device on a monitored system?',o:['The fire department','The central station, to put the account on test','The panel manufacturer'],a:1,w:'The central station receives the signals and dispatches responders. Put the account on test with the account number and passcode, and record the operator number. Some areas also require notifying the fire department.'},
  {q:'You arrive and the panel already shows a trouble. What first?',o:['Reset it','Document it as found (photo and report) and tell the building contact','Ignore it if it’s old'],a:1,w:'Document existing conditions before touching anything. It protects you, and it’s a deficiency the owner needs to know about.'},
  {q:'Why do conventional circuits have an end-of-line (EOL) resistor?',o:['To limit current to the horns','So the panel can supervise the wiring and detect an open circuit','To make detectors more sensitive'],a:1,w:'The panel watches a small current through the EOL resistor. If a wire breaks, the current stops and the panel reports trouble. That’s how wiring is "supervised."'},
- {q:'A valve supervisory switch must signal within how much handwheel movement?',o:['Two revolutions, or 1/5 of the valve’s travel','Ten revolutions','Only when fully closed'],a:0,w:'NFPA 72 requires the switch to operate within two revolutions of the handwheel or when the valve has moved one-fifth of its travel from normal. Partly closed valves are a common way systems get left impaired.'}
+ {q:'A valve supervisory switch must signal within how much handwheel movement?',o:['Two revolutions, or 1/5 of the valve’s travel','Ten revolutions','Only when fully closed'],a:0,w:'NFPA 72 requires the switch to operate within two revolutions of the handwheel or when the valve has moved one-fifth of its travel from normal. Partly closed valves are a common way systems get left impaired.'},
+ {q:'A conventional panel shows ZONE 3 ALARM. How do you find the device that activated?',o:['Read the device address on the display','Walk the zone and look for the device in alarm, such as a detector with its LED latched on or a pull station with its handle down','Press Reset and listen for which device sounds'],a:1,w:'A conventional panel only knows the zone. The zone map or as-built drawings show which devices are on it, and you walk them until you find the one in alarm. An addressable panel names the exact device, which is a big reason addressable systems took over in larger buildings.'}
 ];
 let answered=0,right=0;
 $('quiz').innerHTML=Q.map((x,i)=>`<div class="q" data-q="${i}"><strong>${i+1}. ${x.q}</strong><div class="opts">${x.o.map((o,j)=>`<button type="button" data-j="${j}">${o}</button>`).join('')}</div><p class="why" hidden></p></div>`).join('');
@@ -656,7 +806,7 @@ $('quiz').querySelectorAll('.q').forEach(qe=>{
     qe.querySelectorAll('button').forEach((bb,k)=>{bb.disabled=true;if(k===x.a)bb.classList.add('right');else if(k===j)bb.classList.add('wrong');});
     const w=qe.querySelector('.why');w.hidden=false;w.textContent=(j===x.a?'Correct. ':'Not quite. ')+x.w;
     $('qScore').textContent=`${right} correct · ${answered} of ${Q.length} answered`;
-    if(answered===Q.length)$('qPct').textContent=right>=8?'Passed: Module 1 complete':'Review and retake: pass mark is 8 of 9';
+    if(answered===Q.length)$('qPct').textContent=right>=9?'Passed: Module 1 complete':'Review and retake: pass mark is 9 of 10';
   });
 });
 })();
