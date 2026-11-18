@@ -1,0 +1,171 @@
+<title>Utah Premier Fire Tags</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a print proof sheet. Tags are drawn at true size (inches); notes sit beside them. */
+:root{
+  --bg:#eef0f2; --surface:#ffffff; --ink:#1b1f24; --muted:#5b6470; --line:#cfd5dc; --accent:#b3141f;
+  --paper:#ffffff; --tag-ink:#111111; --tag-red:#c8102e; --tag-red-ink:#ffffff;
+  --f-display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#12161b; --surface:#1a2027; --ink:#e6eaee; --muted:#9aa5b1; --line:#2c3540; --accent:#ff5a63; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#12161b; --surface:#1a2027; --ink:#e6eaee; --muted:#9aa5b1; --line:#2c3540; --accent:#ff5a63; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;padding:0 16px}
+.wrap{max-width:1040px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:.01em}
+h1{font-size:clamp(2rem,5vw,2.8rem);text-transform:uppercase}
+h2{font-size:1.4rem;text-transform:uppercase}
+p{margin:0}
+.lead{max-width:70ch;color:var(--muted)}
+.sheet{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.tagcol{display:flex;flex-direction:column;gap:8px;align-items:center}
+.cap{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.notes{background:var(--surface);border:1px solid var(--line);padding:18px 20px;max-width:72ch}
+.notes ul{margin:8px 0 0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.warn{border-left:5px solid var(--accent)}
+
+/* ---- the tag itself: fixed print colors, true size ---- */
+.tag{width:2.75in;height:5.25in;background:var(--paper);color:var(--tag-ink);border:1.5px solid #222;border-radius:.12in .12in .06in .06in;
+  font-family:"Arial Narrow","Archivo Narrow",Arial,sans-serif;font-size:7.2pt;line-height:1.2;display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.ring{height:.62in;border-bottom:1.5px solid #222;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:#f4f4f4}
+.hole{width:.24in;height:.24in;border-radius:50%;border:2px solid #222;background:var(--bg)}
+.order{font-weight:700;font-size:6.6pt;text-align:center;letter-spacing:.02em;padding:0 .08in}
+.body{padding:.06in .1in;display:flex;flex-direction:column;gap:.045in;flex:1}
+.co{text-align:center;border-bottom:1px solid #222;padding-bottom:.04in}
+.co b{display:block;font-size:11pt;letter-spacing:.03em}
+.row{display:flex;justify-content:space-between;gap:.06in;align-items:center}
+.seal{width:.62in;height:.62in;border:1.5px dashed #222;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:5.6pt;flex:none}
+.lbl{font-weight:700;text-transform:uppercase;font-size:6.4pt}
+.boxes{display:grid;grid-template-columns:1fr 1fr;gap:1px .08in}
+.boxes span::before{content:"";display:inline-block;width:6.5pt;height:6.5pt;border:1px solid #222;margin-right:3px;vertical-align:-1px}
+.punch{display:grid;gap:1px;margin-top:1px}
+.punch.m{grid-template-columns:repeat(6,1fr)}
+.punch.y{grid-template-columns:repeat(6,1fr)}
+.punch span{border:1px solid #222;text-align:center;font-weight:700;padding:1px 0;font-size:6.6pt}
+.line{border-bottom:1px solid #222;height:12pt}
+.small{font-size:6pt}
+.back .big{font-size:12pt;font-weight:700;text-align:center}
+.back .center{text-align:center}
+.tag.red{background:var(--tag-red);color:var(--tag-red-ink);border-color:#5a0010}
+.tag.red .ring{background:#a50d24;border-color:#5a0010}
+.tag.red .line{border-color:#fff}
+.tag.red .boxes span::before{border-color:#fff}
+.condemn{font-size:22pt;font-weight:700;text-align:center;letter-spacing:.04em;margin:.06in 0 .02in}
+@media print{
+  @page{size:letter;margin:.4in}
+  body{background:#fff;padding:0}
+  .notes,.lead,h1,h2.h-notes{display:none}
+  .tag{box-shadow:none}
+  .hole{background:#fff}
+}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <h1>Service Tag Template · Utah Premier Fire LLC</h1>
+    <p class="lead">Draft tags at real size (2.75 × 5.25 in). The front carries every item Utah rule R710-1-7 requires on one side; the back carries your contact details. Bracketed items get filled in once the State Fire Marshal issues your license. Give this to a tag printer as a layout guide, not as final art.</p>
+  </header>
+
+  <div class="sheet">
+    <!-- FRONT -->
+    <div class="tagcol">
+      <div class="tag">
+        <div class="ring"><div class="hole"></div><div class="order">DO NOT REMOVE, BY ORDER OF THE STATE FIRE MARSHAL</div></div>
+        <div class="body">
+          <div class="co"><b>UTAH PREMIER FIRE LLC</b>255 S University Ave Apt A409 · Provo, UT 84601</div>
+          <div class="row">
+            <div style="display:flex;flex-direction:column;gap:3px">
+              <div><span class="lbl">License type:</span> [TYPE]</div>
+              <div><span class="lbl">Concern license #:</span> [######]</div>
+            </div>
+            <div class="seal">STATE FIRE MARSHAL SEAL OF REGISTRATION</div>
+          </div>
+          <div>
+            <div class="lbl">Service performed</div>
+            <div class="boxes"><span>Annual maintenance</span><span>Recharge</span><span>Repair</span><span>New installation</span><span>6-year maint.</span><span>Hydrostatic test</span></div>
+          </div>
+          <div>
+            <div class="lbl">Extinguisher type</div>
+            <div class="boxes"><span>ABC dry chem</span><span>BC dry chem</span><span>CO₂</span><span>Water</span><span>Class K</span><span>Clean agent</span><span>Class D</span><span>Other ____</span></div>
+          </div>
+          <div>
+            <div class="lbl">Date of service (punch)</div>
+            <div class="punch m"><span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AUG</span><span>SEP</span><span>OCT</span><span>NOV</span><span>DEC</span></div>
+            <div class="punch y" style="margin-top:2px"><span>2027</span><span>2028</span><span>2029</span><span>2030</span><span>2031</span><span>2032</span></div>
+            <div class="row" style="margin-top:2px"><span class="lbl">Day</span><div class="line" style="flex:1"></div></div>
+          </div>
+          <div>
+            <div class="row"><span class="lbl">Signature</span><div class="line" style="flex:1"></div></div>
+            <div class="row"><span class="lbl">Cert. of registration #</span><div class="line" style="flex:1"></div></div>
+          </div>
+        </div>
+      </div>
+      <span class="cap">Front · required info</span>
+    </div>
+
+    <!-- BACK -->
+    <div class="tagcol">
+      <div class="tag back">
+        <div class="ring"><div class="hole"></div><div class="order">DO NOT REMOVE, BY ORDER OF THE STATE FIRE MARSHAL</div></div>
+        <div class="body" style="gap:.08in">
+          <div class="big">UTAH PREMIER FIRE</div>
+          <div class="center">Portable fire extinguisher inspection, service, recharge and sales</div>
+          <div class="center" style="font-size:9pt;font-weight:700">[PHONE]</div>
+          <div class="center">[BUSINESS EMAIL]</div>
+          <div style="border-top:1px solid #222;padding-top:.05in">
+            <div class="lbl">Building / location</div><div class="line"></div>
+            <div class="lbl" style="margin-top:3px">Unit # / serial</div><div class="line"></div>
+            <div class="lbl" style="margin-top:3px">Next annual due</div><div class="line"></div>
+            <div class="lbl" style="margin-top:3px">Next 6-year / hydro due</div><div class="line"></div>
+          </div>
+          <div class="small center" style="margin-top:auto">Inspect monthly: pin and tamper seal in place, gauge in green, no damage, unobstructed. Call us if anything looks wrong.</div>
+        </div>
+      </div>
+      <span class="cap">Back · your info</span>
+    </div>
+
+    <!-- CONDEMNED -->
+    <div class="tagcol">
+      <div class="tag red">
+        <div class="ring"><div class="hole"></div><div class="order">DO NOT REMOVE, BY ORDER OF THE STATE FIRE MARSHAL</div></div>
+        <div class="body" style="gap:.07in">
+          <div class="condemn">CONDEMNED</div>
+          <div style="text-align:center;font-weight:700">THIS EXTINGUISHER IS NOT SAFE TO USE. REMOVE FROM SERVICE.</div>
+          <div><div class="lbl">Reason</div>
+            <div class="boxes" style="grid-template-columns:1fr"><span>Corrosion / damage</span><span>Obsolete / not serviceable</span><span>Leaks / will not hold pressure</span><span>Other ____________</span></div></div>
+          <div class="lbl">Location</div><div class="line"></div>
+          <div class="lbl">Date</div><div class="line"></div>
+          <div class="lbl">Technician signature</div><div class="line"></div>
+          <div class="lbl">Cert. of registration #</div><div class="line"></div>
+          <div class="small" style="margin-top:auto;text-align:center">UTAH PREMIER FIRE LLC · Provo, UT · [PHONE]</div>
+        </div>
+      </div>
+      <span class="cap">Condemned tag · red, same size</span>
+    </div>
+  </div>
+
+  <h2 class="h-notes">Before you order</h2>
+  <div class="notes warn">
+    <b>Confirm three things with the State Fire Marshal's office first.</b> The size and color rules in R710-1-7 weren't readable in the copies I found, so these are placeholders:
+    <ul>
+      <li>The required tag size and color (this draft uses the common 2.75 × 5.25 in; the condemned tag must be red and at least as large as your service tag).</li>
+      <li>The exact Seal of Registration artwork and your license type wording. Both come with your license.</li>
+      <li>What "Provisions of Section 6.7" means for your tag. The rule lists it as required information.</li>
+    </ul>
+  </div>
+  <div class="notes">
+    <b>Ordering tips</b>
+    <ul>
+      <li>Ask an extinguisher tag printer for a proof matching this layout. They know state tag formats and print on durable stock with a reinforced hole.</li>
+      <li>Front holds only the required items, as the rule requires. Anything else, such as your phone and "next due" lines, stays on the back.</li>
+      <li>A new tag goes on each extinguisher every time you service it. A brand-new unit with a printed manufacture date doesn't need a tag until one year after that date.</li>
+      <li>Order matching verification-of-service collars printed with your company name for recharges.</li>
+      <li>Your 6-year and hydro subcontractor tags their own work, so you mostly use Annual, Recharge, Repair and New installation.</li>
+    </ul>
+  </div>
+</div>
